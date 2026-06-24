@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Driver's License Prep - Signs &amp; Knowledge</title>
+<style>
+  :root{
+    --ink:#10100f;--paper:#f6f3ec;--paper-2:#fffdf8;--line:#2a2a28;
+    --hwy:#1d4e3f;--hwy-2:#16a06a;--sign-red:#d8232a;--sign-yellow:#f5c518;
+    --sign-orange:#e8531a;--muted:#6b6b64;--shadow:0 2px 0 var(--line);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px 80px}
+
+  /* ---- hero: highway guide-sign motif, centered ---- */
+  header{
+    position:relative;background:var(--hwy);color:#f6f3ec;border-bottom:4px solid var(--line);
+    padding:54px 20px 46px;overflow:hidden;text-align:center;
+  }
+  /* faint route-shield watermark + reflective border like a real guide sign */
+  header::before{
+    content:"";position:absolute;inset:14px;border:3px solid rgba(255,255,255,.22);border-radius:14px;
+    pointer-events:none;
+  }
+  header::after{
+    content:"";position:absolute;top:50%;left:50%;width:520px;height:520px;transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(159,227,193,.10) 0%, transparent 62%);pointer-events:none;
+  }
+  .head-inner{max-width:760px;margin:0 auto;position:relative}
+  .shield{
+    display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+    width:60px;height:66px;margin:0 auto 20px;gap:1px;
+    background:#f6f3ec;color:var(--hwy);border-radius:8px 8px 10px 10px;position:relative;
+    border:3px solid #0e2b22;box-shadow:0 3px 0 #0e2b22;font-weight:900;
+  }
+  .shield .nc{font-size:21px;letter-spacing:-.02em;line-height:1}
+  .shield .dmv{font-size:9px;letter-spacing:.16em;line-height:1;font-weight:800}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:#9fe3c1;margin-bottom:14px}
+  h1{margin:0;font-size:clamp(34px,6.2vw,64px);line-height:.98;font-weight:800;letter-spacing:-.025em}
+  .sub{margin:16px auto 0;font-size:16px;line-height:1.55;color:#dceee3;max-width:54ch}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;justify-content:center}
+  .badge{background:rgba(246,243,236,.95);color:var(--hwy);font-weight:700;font-size:12.5px;padding:7px 13px;
+    border-radius:30px;border:2px solid #0e2b22;box-shadow:0 2px 0 #0e2b22}
+  .hero-rule{width:54px;height:4px;background:var(--sign-yellow);border-radius:3px;margin:24px auto 0}
+
+  /* ---- landing / state select screen ---- */
+  #landing{position:fixed;inset:0;z-index:100;background:var(--hwy);color:#f6f3ec;
+    display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+  #landing::before{content:"";position:absolute;inset:18px;border:3px solid rgba(255,255,255,.18);border-radius:18px;pointer-events:none}
+  .land-inner{max-width:560px;width:100%;text-align:center;position:relative;padding:30px 0}
+  .land-shield{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+    width:74px;height:80px;margin:0 auto 22px;gap:2px;background:#f6f3ec;color:var(--hwy);
+    border-radius:9px 9px 12px 12px;border:3px solid #0e2b22;box-shadow:0 4px 0 #0e2b22;font-weight:900}
+  .land-shield .us{font-size:26px;letter-spacing:-.02em;line-height:1}
+  .land-shield .dl{font-size:9px;letter-spacing:.14em;line-height:1;font-weight:800}
+  .land-eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:#9fe3c1;margin-bottom:14px}
+  #landing h1{font-size:clamp(30px,6vw,50px);line-height:1.02;margin:0 0 14px}
+  .land-sub{font-size:16px;color:#dceee3;max-width:42ch;margin:0 auto 30px;line-height:1.55}
+  .state-select-wrap{position:relative;max-width:380px;margin:0 auto}
+  .state-select-label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+    color:#9fe3c1;margin-bottom:10px;display:block}
+  #stateSelect{width:100%;font-family:inherit;font-size:17px;font-weight:700;padding:16px 18px;
+    border-radius:10px;border:3px solid #0e2b22;background:#f6f3ec;color:var(--ink);cursor:pointer;
+    box-shadow:0 4px 0 #0e2b22;-webkit-appearance:none;appearance:none;text-align:center}
+  #stateSelect:focus{outline:3px solid var(--sign-yellow);outline-offset:2px}
+  .land-go{margin-top:18px;width:100%;max-width:380px;font-family:inherit;font-size:16px;font-weight:800;
+    letter-spacing:.03em;padding:15px;border-radius:10px;border:3px solid #0e2b22;cursor:pointer;
+    background:var(--sign-yellow);color:#0e2b22;box-shadow:0 4px 0 #0e2b22;transition:transform .08s}
+  .land-go:active{transform:translateY(3px);box-shadow:0 1px 0 #0e2b22}
+  .land-go:disabled{opacity:.5;cursor:not-allowed}
+  .land-foot{margin-top:26px;font-size:12.5px;color:#9fe3c1;line-height:1.5;max-width:40ch;margin-left:auto;margin-right:auto}
+
+  /* ---- state switcher in header ---- */
+  .state-switch{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:rgba(246,243,236,.12);
+    border:2px solid rgba(255,255,255,.3);border-radius:30px;padding:6px 8px 6px 16px}
+  .state-switch .cur{font-size:13px;font-weight:700;letter-spacing:.04em;color:#f6f3ec}
+  .state-switch select{font-family:inherit;font-size:13px;font-weight:700;border:none;border-radius:20px;
+    padding:6px 12px;background:#f6f3ec;color:var(--hwy);cursor:pointer}
+  .state-name-inline{color:#f6f3ec;font-weight:800;border-bottom:2px solid var(--sign-yellow)}
+  nav.tabs{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:2px solid var(--line);
+    display:flex;flex-wrap:wrap;max-width:1040px;margin:0 auto;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+  nav.tabs button{flex:1 1 auto;min-width:110px;font-family:inherit;font-weight:700;font-size:13px;
+    letter-spacing:.04em;text-transform:uppercase;padding:16px 8px;background:transparent;color:var(--muted);
+    border:0;border-right:1px solid #d8d2c4;cursor:pointer;transition:background .15s,color .15s;position:relative}
+  nav.tabs button:last-child{border-right:0}
+  nav.tabs button:hover{background:#ece7da;color:var(--ink)}
+  nav.tabs button.active{background:var(--hwy);color:var(--paper)}
+  nav.tabs button.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--sign-yellow)}
+  section.panel{display:none;padding-top:40px}
+  section.panel.active{display:block}
+  .section-head{text-align:center;max-width:60ch;margin:0 auto 8px}
+  h2.section-title{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
+    color:var(--hwy);margin:42px 0 0;display:flex;align-items:center;gap:14px;justify-content:center}
+  h2.section-title::before,h2.section-title::after{content:"";width:34px;height:2px;background:var(--hwy);opacity:.4}
+  .lead{font-size:16px;margin:12px auto 0;color:#44443d;text-align:center;max-width:60ch}
+
+  .legend{display:flex;gap:8px;flex-wrap:wrap;margin:20px auto 6px;justify-content:center;max-width:760px}
+  .legend .chip{font-size:12px;font-weight:700;padding:5px 10px;border:2px solid var(--line);
+    border-radius:2px;display:flex;align-items:center;gap:7px;background:var(--paper-2)}
+  .swatch{width:13px;height:13px;border:1.5px solid var(--line);display:inline-block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:18px}
+  .sign-card{background:var(--paper-2);border:2px solid var(--line);border-radius:3px;box-shadow:var(--shadow);
+    padding:14px 10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:9px}
+  .sign-card svg{width:92px;height:92px;display:block}
+  .signwrap{display:inline-flex;align-items:center;justify-content:center}
+  .signwrap img{display:block;object-fit:contain}
+  .grid-sign img{width:92px;height:92px}
+  .grid-sign svg{width:92px;height:92px}
+  .fc-signbox .signwrap,.fc-signbox img,.fc-signbox svg{width:100%;height:100%}
+  .quiz-sign .signwrap,.quiz-sign img,.quiz-sign svg{width:180px;height:180px}
+  .sign-name{font-weight:800;font-size:13.5px}
+  .sign-mean{font-size:12px;color:var(--muted);line-height:1.35}
+
+  /* flashcards */
+  .fc-stage{display:flex;flex-direction:column;align-items:center;margin-top:24px}
+  .fc-progress{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px;letter-spacing:.04em}
+  .flashcard{width:100%;max-width:500px;height:380px;perspective:1500px;cursor:pointer}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flashcard.flipped .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;border:2px solid var(--line);border-radius:6px;
+    box-shadow:4px 4px 0 var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:26px;text-align:center;background:var(--paper-2)}
+  .fc-front{background:var(--ink);color:var(--paper)}
+  .fc-front .q{font-size:21px;font-weight:700;line-height:1.35;max-width:34ch}
+  .fc-signbox{width:190px;height:190px;background:#fff;border-radius:12px;padding:14px;margin:0 auto;
+    display:flex;align-items:center;justify-content:center}
+  .fc-signbox svg{width:100%;height:100%}
+  .fc-tag{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:16px;color:var(--hwy-2)}
+  .fc-back{transform:rotateY(180deg)}
+  .fc-back .a{font-size:18px;font-weight:600;line-height:1.45;color:var(--ink)}
+  .fc-hint{position:absolute;bottom:12px;left:0;right:0;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:#999;font-weight:700}
+  .fc-front .fc-hint{color:#6f8f80}
+  .fc-controls{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:inherit;font-weight:700;font-size:14px;letter-spacing:.03em;padding:12px 22px;
+    border:2px solid var(--line);border-radius:3px;cursor:pointer;background:var(--paper-2);color:var(--ink);
+    box-shadow:var(--shadow);transition:transform .08s}
+  .btn:active{transform:translateY(2px);box-shadow:0 0 0 var(--line)}
+  .btn.primary{background:var(--hwy);color:var(--paper)}
+  .btn.ghost{box-shadow:none}
+  .fc-deckpick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+  .fc-deckpick button{font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 14px;
+    border:2px solid var(--line);background:var(--paper-2);border-radius:20px;cursor:pointer}
+  .fc-deckpick button.on{background:var(--hwy);color:var(--paper);border-color:#0e2b22}
+
+  /* rules */
+  .rule{border:2px solid var(--line);border-radius:4px;margin-top:12px;background:var(--paper-2);
+    box-shadow:var(--shadow);overflow:hidden}
+  .rule summary{padding:15px 18px;font-weight:800;font-size:15.5px;cursor:pointer;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .rule summary::-webkit-details-marker{display:none}
+  .rule summary::after{content:"+";font-size:22px;font-weight:700;color:var(--hwy)}
+  .rule[open] summary::after{content:"\2013"}
+  .rule[open] summary{border-bottom:2px solid var(--line);background:#eee9dc}
+  .rule .body{padding:8px 18px 18px;font-size:14.5px}
+  .rule .body ul{margin:8px 0 0;padding-left:18px}
+  .rule .body li{margin:6px 0}
+  .rule .body strong{color:var(--hwy)}
+  .pill{display:inline-block;background:var(--sign-yellow);border:1.5px solid var(--line);font-size:11px;
+    font-weight:800;padding:2px 8px;border-radius:2px;margin-left:8px;text-transform:uppercase;letter-spacing:.05em}
+  .pill.red{background:var(--sign-red);color:#fff}
+
+  /* checklist */
+  .check-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:20px}
+  .check-card{background:var(--paper-2);border:2px solid var(--line);border-radius:5px;box-shadow:var(--shadow);padding:18px}
+  .check-card h3{margin:0 0 4px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .check-card .tagline{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .check-list{list-style:none;padding:0;margin:0}
+  .check-list li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:14px;border-top:1px dashed #cfc9ba}
+  .check-list li:first-child{border-top:0}
+  .check-box{flex:0 0 18px;height:18px;border:2px solid var(--line);border-radius:3px;margin-top:1px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--hwy);background:#fff}
+  .check-box.on{background:var(--hwy);color:#fff}
+  .note{background:#fff7d6;border:2px solid var(--line);border-radius:5px;padding:14px 16px;margin-top:18px;font-size:14px}
+
+  /* quiz */
+  .versionpick{display:flex;gap:8px;flex-wrap:wrap;margin:20px auto 0;justify-content:center}
+  .versionpick button{font-family:inherit;font-size:13px;font-weight:700;padding:10px 18px;
+    border:2px solid var(--line);background:var(--paper-2);border-radius:30px;cursor:pointer;box-shadow:0 2px 0 var(--line)}
+  .versionpick button.on{background:var(--hwy);color:var(--paper);border-color:#0e2b22}
+  .quiz-card{background:var(--paper-2);border:2px solid var(--line);border-radius:6px;
+    box-shadow:4px 4px 0 var(--line);padding:26px;margin-top:20px}
+  .quiz-meta{display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;letter-spacing:.04em;
+    color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+  .quiz-q{font-size:20px;font-weight:700;line-height:1.35;margin-bottom:6px}
+  .quiz-sign{display:flex;justify-content:center;margin:18px 0}
+  .quiz-sign .box{background:#fff;border:2px solid var(--line);border-radius:10px;padding:14px}
+  .quiz-sign svg{width:180px;height:180px;display:block}
+  .opts{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+  .opt{text-align:left;font-family:inherit;font-size:15px;font-weight:600;padding:14px 16px;
+    border:2px solid var(--line);border-radius:4px;background:var(--paper);cursor:pointer;transition:background .12s;
+    display:flex;gap:10px;align-items:flex-start}
+  .opt:hover{background:#ece7da}
+  .opt .ltr{font-weight:800;color:var(--hwy)}
+  .opt.correct{background:#d6f0e0;border-color:var(--hwy)}
+  .opt.wrong{background:#fbdcdc;border-color:var(--sign-red)}
+  .opt:disabled{cursor:default}
+  .quiz-fb{margin-top:16px;font-size:14.5px;font-weight:600;padding:12px 14px;border-radius:4px;display:none}
+  .quiz-fb.show{display:block}
+  .quiz-fb.good{background:#d6f0e0;border:2px solid var(--hwy)}
+  .quiz-fb.bad{background:#fbdcdc;border:2px solid var(--sign-red)}
+  .quiz-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:10px;flex-wrap:wrap}
+  .scorebar{height:12px;background:#e2ddd0;border:2px solid var(--line);border-radius:20px;overflow:hidden;flex:1;min-width:140px}
+  .scorebar>i{display:block;height:100%;background:var(--hwy-2);width:0;transition:width .3s}
+  .result{text-align:center;padding:18px}
+  .result .big{font-size:54px;font-weight:800;line-height:1}
+  .result .verdict{font-size:18px;font-weight:700;margin-top:8px}
+  .result .pass{color:var(--hwy)}
+  .result .fail{color:var(--sign-red)}
+  .disclaimer{margin-top:50px;padding-top:20px;border-top:2px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .site-footer{background:#111;color:#cfcabb;border-top:4px solid var(--line);padding:26px 20px;display:none}
+  .site-footer .sf-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .sf-left{font-size:13.5px;letter-spacing:.08em;font-weight:600;text-transform:uppercase;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace}
+  .sf-right{display:flex;align-items:center;gap:14px}
+  .sf-icon{color:#9a958a;display:inline-flex;transition:color .15s,transform .15s}
+  .sf-icon:hover{color:#f6f3ec;transform:translateY(-1px)}
+
+  /* ---- road test ---- */
+  .rt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:22px}
+  .rt-skill{background:var(--paper-2);border:2px solid var(--line);border-radius:6px;box-shadow:var(--shadow);
+    padding:18px;position:relative}
+  .rt-skill .num{position:absolute;top:-12px;left:16px;background:var(--hwy);color:var(--paper);
+    font-weight:800;font-size:13px;width:30px;height:30px;border-radius:50%;border:2px solid #0e2b22;
+    display:flex;align-items:center;justify-content:center}
+  .rt-skill h3{margin:8px 0 6px;font-size:16px;font-weight:800}
+  .rt-skill p{margin:0;font-size:13.5px;color:#44443d;line-height:1.5}
+  .rt-fails{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .rt-fail{display:flex;gap:12px;align-items:flex-start;background:#fbeaea;border:2px solid var(--sign-red);
+    border-radius:6px;padding:13px 16px;font-size:14.5px;font-weight:600}
+  .rt-fail .x{flex:0 0 22px;height:22px;background:var(--sign-red);color:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+
+  /* ---- progress ---- */
+  .prog-scope{display:flex;gap:8px;justify-content:center;margin-top:18px}
+  .prog-filter{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:12px;font-size:13px;font-weight:700}
+  .prog-filter select{font-family:inherit;font-size:13px;font-weight:700;padding:7px 12px;border:2px solid var(--line);
+    border-radius:8px;background:var(--paper-2);color:var(--ink);cursor:pointer}
+  .prog-scope button{font-family:inherit;font-size:13px;font-weight:700;padding:9px 18px;border:2px solid var(--line);
+    background:var(--paper-2);border-radius:30px;cursor:pointer;box-shadow:0 2px 0 var(--line)}
+  .prog-scope button.on{background:var(--hwy);color:var(--paper);border-color:#0e2b22}
+  .prog-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:22px}
+  .stat{background:var(--paper-2);border:2px solid var(--line);border-radius:6px;box-shadow:var(--shadow);
+    padding:18px 16px;text-align:center}
+  .stat .big{font-size:34px;font-weight:800;line-height:1;color:var(--hwy)}
+  .stat .lbl{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .stat.pass .big{color:var(--hwy-2)}
+  .ver-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:8px}
+  .ver-card{background:var(--paper-2);border:2px solid var(--line);border-radius:6px;padding:14px;text-align:center}
+  .ver-card .vname{font-weight:800;font-size:14px;margin-bottom:6px}
+  .ver-card .vbest{font-size:24px;font-weight:800;color:var(--ink)}
+  .ver-card .vstatus{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+  .ver-card.passed{border-color:var(--hwy);background:#e8f4ec}
+  .ver-card.passed .vstatus{color:var(--hwy)}
+  .ver-card.notyet .vstatus{color:var(--muted)}
+  .ver-card.untaken{opacity:.7;border-style:dashed}
+  .prog-history{margin-top:14px}
+  .hist-row{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;font-size:14px;
+    border:2px solid var(--line);border-radius:5px;background:var(--paper-2);margin-bottom:8px}
+  .hist-row .htest{font-weight:700}
+  .hist-row .hscore{font-weight:800}
+  .hist-row .hscore.p{color:var(--hwy)}
+  .hist-row .hscore.f{color:var(--sign-red)}
+  .hist-empty,.weak-empty{text-align:center;color:var(--muted);font-size:14.5px;padding:24px;
+    border:2px dashed #cfc9ba;border-radius:6px;margin-top:14px}
+  .prog-weak{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;justify-content:center}
+  .weak-chip{background:#fff7d6;border:2px solid var(--line);border-radius:30px;padding:9px 15px;
+    font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .weak-chip .cnt{background:var(--sign-red);color:#fff;border-radius:20px;font-size:11px;padding:1px 7px;font-weight:800}
+
+  @media print{
+    nav.tabs,.fc-controls,.fc-deckpick,.versionpick,#quizLive,#quizResult,#progReset,
+    .check-box,#tabs,#landing,.prog-scope,.state-switch{display:none!important}
+    header{padding:24px;border:none}
+    header::before,header::after{display:none}
+    .panel{display:block!important;page-break-before:always;padding-top:20px}
+    #checklist{page-break-before:avoid}
+    body{background:#fff}
+    .sign-card,.rt-skill,.check-card,.rule,.stat{box-shadow:none}
+    .rule{break-inside:avoid}
+    .grid{grid-template-columns:repeat(4,1fr)}
+    a[href]:after{content:""}
+    .site-footer{display:block!important;background:#fff;color:#333;border-top:2px solid var(--line)}
+    .sf-icon{color:#333}
+  }
+  .hide{display:none!important}
+  @media (max-width:560px){
+    nav.tabs button{min-width:50%;border-bottom:2px solid var(--line)}
+    .flashcard{height:340px}
+    .fc-signbox{width:160px;height:160px}
+    .quiz-sign svg{width:150px;height:150px}
+    .site-footer .sf-inner{flex-direction:column;gap:14px;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== LANDING / STATE SELECT ===================== -->
+<div id="landing">
+  <div class="land-inner">
+    <div class="land-shield"><span class="us">US</span><span class="dl">DMV</span></div>
+    <div class="land-eyebrow">Driver's License Prep</div>
+    <h1>Pass your DMV<br>knowledge test</h1>
+    <p class="land-sub">Pick your state to get the signs, road rules, and practice tests tailored to your DMV.</p>
+    <div class="state-select-wrap">
+      <label class="state-select-label" for="stateSelect">Choose your state</label>
+      <select id="stateSelect" aria-label="Choose your state">
+        <option value="">Select a state...</option>
+      </select>
+    </div>
+    <button class="land-go" id="landGo" disabled>Start studying</button>
+    <p class="land-foot">Signs follow the federal MUTCD standard used in every state. Test format and rules shown are study guidance; always confirm specifics with your state DMV.</p>
+  </div>
+</div>
+
+<header>
+  <div class="head-inner">
+    <div class="shield"><span class="nc" id="shieldAbbr">NC</span><span class="dmv">DMV</span></div>
+    <div class="eyebrow" id="heroEyebrow">North Carolina · Class C License</div>
+    <h1>Signs &amp; Knowledge<br>Test Prep</h1>
+    <p class="sub" id="heroSub"></p>
+    <div class="badge-row" id="heroBadges"></div>
+    <div class="state-switch">
+      <span class="cur">State:</span>
+      <select id="stateSwitch" aria-label="Switch state"></select>
+    </div>
+    <div class="hero-rule"></div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="active" data-tab="checklist">What to Bring</button>
+  <button data-tab="signs">Signs Reference</button>
+  <button data-tab="cards">Flashcards</button>
+  <button data-tab="rules">Rules of the Road</button>
+  <button data-tab="quiz">Practice Tests</button>
+  <button data-tab="roadtest">Road Test</button>
+  <button data-tab="progress">My Progress</button>
+</nav>
+
+<div class="wrap">
+
+  <!-- ===================== CHECKLIST ===================== -->
+  <section class="panel active" id="checklist">
+    <h2 class="section-title">What each test involves</h2>
+    <p class="lead" id="checklistIntro">As a new resident or first-time driver, you take all four parts. Tap a box to check it off as you prep.</p>
+    <div class="check-cols" id="testParts"></div>
+
+    <h2 class="section-title">Documents to bring</h2>
+    <p class="lead">Bring originals, not photocopies. You need proof from each category below. Tap to check off as you gather them.</p>
+    <div class="check-cols" id="docCols"></div>
+
+    <div class="note" id="docNote"></div>
+  </section>
+
+  <!-- ===================== SIGNS ===================== -->
+  <section class="panel" id="signs">
+    <h2 class="section-title">How signs work</h2>
+    <p class="lead">On the signs test you identify each sign by its <strong>shape and color</strong> and say what it means. Learn the shape and color system first, because it lets you decode signs you have never seen.</p>
+    <div class="legend">
+      <span class="chip"><span class="swatch" style="background:#d8232a"></span>Red - stop or prohibited</span>
+      <span class="chip"><span class="swatch" style="background:#f5c518"></span>Yellow - general warning</span>
+      <span class="chip"><span class="swatch" style="background:#e8531a"></span>Orange - work zone</span>
+      <span class="chip"><span class="swatch" style="background:#1d4e3f"></span>Green - guide or permitted</span>
+      <span class="chip"><span class="swatch" style="background:#1f6fb2"></span>Blue - motorist services</span>
+      <span class="chip"><span class="swatch" style="background:#6b3f1d"></span>Brown - recreation or scenic</span>
+    </div>
+
+    <h2 class="section-title">Sign shapes at a glance</h2>
+    <div class="grid" id="shape-grid"></div>
+
+    <h2 class="section-title">Regulatory signs</h2>
+    <p class="lead">These tell you the law: what you must or must not do. Mostly white rectangles, plus the red stop, yield, and do-not-enter shapes.</p>
+    <div class="grid" id="reg-grid"></div>
+
+    <h2 class="section-title">Warning signs</h2>
+    <p class="lead">Yellow diamonds and special shapes warning of a hazard or change ahead. Orange means a work zone.</p>
+    <div class="grid" id="warn-grid"></div>
+
+    <h2 class="section-title">Guide &amp; service signs</h2>
+    <p class="lead">Green guides you to places, blue marks driver services, brown marks parks and recreation.</p>
+    <div class="grid" id="guide-grid"></div>
+  </section>
+
+  <!-- ===================== FLASHCARDS ===================== -->
+  <section class="panel" id="cards">
+    <h2 class="section-title">Flashcards</h2>
+    <p class="lead">Tap a card to flip it. Mix signs and rules, or focus one deck. Shuffle for a fresh order.</p>
+    <div class="fc-deckpick" id="deckpick">
+      <button class="on" data-deck="all">All</button>
+      <button data-deck="signs">Signs only</button>
+      <button data-deck="rules">Rules only</button>
+    </div>
+    <div class="fc-stage">
+      <div class="fc-progress" id="fcProgress">Card 1</div>
+      <div class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="Flashcard, tap to flip">
+        <div class="fc-inner">
+          <div class="fc-face fc-front">
+            <div class="fc-tag" id="fcTag">PROMPT</div>
+            <div class="q" id="fcQ"></div>
+            <div class="fc-hint">Tap to reveal</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-tag" style="color:var(--hwy)">ANSWER</div>
+            <div class="a" id="fcA"></div>
+            <div class="fc-hint" style="color:#bbb">Tap to flip back</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="btn ghost" id="fcPrev">‹ Prev</button>
+        <button class="btn" id="fcShuffle">Shuffle</button>
+        <button class="btn primary" id="fcNext">Next ›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RULES ===================== -->
+  <section class="panel" id="rules">
+    <h2 class="section-title">Rules of the road</h2>
+    <p class="lead">The written test leans hard on these. The flagged topics are where most people lose points, so give them extra attention.</p>
+    <div class="note" id="rulesFormat" style="margin-bottom:8px"></div>
+    <div id="rulesList"></div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="panel" id="quiz">
+    <h2 class="section-title">Practice tests</h2>
+    <p class="lead">Three different versions, 20 questions each, mixing sign ID and rules. You need 80% (16 of 20) to pass, same as the real test. Each version is a different question set.</p>
+    <div class="versionpick" id="versionpick">
+      <button class="on" data-v="0">Test A</button>
+      <button data-v="1">Test B</button>
+      <button data-v="2">Test C</button>
+      <button data-v="mix">Random Mix</button>
+    </div>
+
+    <div id="quizLive">
+      <div class="quiz-card">
+        <div class="quiz-meta"><span id="qCount">Question 1 of 20</span><span id="qScore">Score 0</span></div>
+        <div class="quiz-q" id="qText"></div>
+        <div class="quiz-sign hide" id="qSign"></div>
+        <div class="opts" id="qOpts"></div>
+        <div class="quiz-fb" id="qFb"></div>
+        <div class="quiz-foot">
+          <div class="scorebar"><i id="qBar"></i></div>
+          <button class="btn primary hide" id="qNext">Next ›</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="quizResult" class="hide">
+      <div class="quiz-card result">
+        <div class="big" id="rScore"></div>
+        <div class="verdict" id="rVerdict"></div>
+        <p class="lead" id="rMsg" style="margin:14px auto 0"></p>
+        <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="btn primary" id="rRetry">Retake this version</button>
+          <button class="btn" id="rNextV">Try another version</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ROAD TEST ===================== -->
+  <section class="panel" id="roadtest">
+    <h2 class="section-title">The road test</h2>
+    <p class="lead">The on-road test comes after you pass vision, signs, and knowledge. An examiner rides with you and scores how you handle real driving. Here is what they watch for and what ends a test early.</p>
+
+    <div class="rt-grid" id="rtSkills"></div>
+
+    <h2 class="section-title">Automatic fails</h2>
+    <p class="lead">These end the test immediately, no matter how well the rest went. Know them cold.</p>
+    <div class="rt-fails" id="rtFails"></div>
+
+    <h2 class="section-title">Before you go</h2>
+    <p class="lead">The car you bring has to pass inspection too, not just you. Tap to check off.</p>
+    <div class="check-cols" id="rtCar"></div>
+    <div class="note" id="rtNote"></div>
+  </section>
+
+  <!-- ===================== PROGRESS ===================== -->
+  <section class="panel" id="progress">
+    <h2 class="section-title">My progress</h2>
+    <p class="lead">Your practice results are saved in this browser, no login needed. View just your current state, or your total across every state you have studied.</p>
+
+    <div class="prog-scope" id="progScope">
+      <button class="on" data-scope="state">This state</button>
+      <button data-scope="all">All states</button>
+    </div>
+    <div class="prog-filter hide" id="progFilter">
+      <label for="progStateFilter">Filter:</label>
+      <select id="progStateFilter"><option value="">All states</option></select>
+    </div>
+
+    <div class="prog-summary" id="progSummary"></div>
+
+    <h2 class="section-title">Test history</h2>
+    <div class="prog-history" id="progHistory"></div>
+
+    <h2 class="section-title">Signs &amp; rules to review</h2>
+    <p class="lead">Topics you have missed in practice, most-missed first. Drill these before test day.</p>
+    <div class="prog-weak" id="progWeak"></div>
+
+    <div style="text-align:center;margin-top:26px">
+      <button class="btn" id="progReset">Reset my progress</button>
+    </div>
+  </section>
+
+  <div class="disclaimer" id="appFooter">
+    Study aid built on federal MUTCD signs and common US road rules. Test format and state rules are guidance only; always confirm specifics with your state DMV.
+  </div>
+</div>
+
+<footer class="site-footer" id="siteFooter">
+  <div class="sf-inner">
+    <div class="sf-left">© <span id="sfYear"></span> Justin Burrell</div>
+    <div class="sf-right">
+      <a href="https://www.linkedin.com/in/thejustinburrell/" target="_blank" rel="noopener" aria-label="LinkedIn" class="sf-icon">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="https://github.com/JustinBurrell" target="_blank" rel="noopener" aria-label="GitHub" class="sf-icon">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+<script>
+/* ============ STATE DATA (50 states + DC) ============ */
+const STATES={
+  AL:{name:"Alabama",abbr:"AL",dmv:"https://alea.gov/dps/driver-license",q:30,pass:24,pct:80,residency:30},
+  AK:{name:"Alaska",abbr:"AK",dmv:"https://doa.alaska.gov/dmv",q:20,pass:16,pct:80,residency:0},
+  AZ:{name:"Arizona",abbr:"AZ",dmv:"https://azdot.gov/mvd",q:30,pass:24,pct:80,residency:0},
+  AR:{name:"Arkansas",abbr:"AR",dmv:"https://dfa.arkansas.gov",q:25,pass:20,pct:80,residency:30},
+  CA:{name:"California",abbr:"CA",dmv:"https://dmv.ca.gov",q:36,pass:30,pct:83,residency:10},
+  CO:{name:"Colorado",abbr:"CO",dmv:"https://dmv.colorado.gov",q:25,pass:20,pct:80,residency:30},
+  CT:{name:"Connecticut",abbr:"CT",dmv:"https://portal.ct.gov/dmv",q:25,pass:20,pct:80,residency:30},
+  DE:{name:"Delaware",abbr:"DE",dmv:"https://dmv.de.gov",q:30,pass:24,pct:80,residency:60},
+  DC:{name:"District of Columbia",abbr:"DC",dmv:"https://dmv.dc.gov",q:25,pass:20,pct:80,residency:30},
+  FL:{name:"Florida",abbr:"FL",dmv:"https://flhsmv.gov",q:50,pass:40,pct:80,residency:30},
+  GA:{name:"Georgia",abbr:"GA",dmv:"https://dds.georgia.gov",q:20,pass:15,pct:75,residency:30},
+  HI:{name:"Hawaii",abbr:"HI",dmv:"https://honolulu.gov/csd",q:30,pass:24,pct:80,residency:0},
+  ID:{name:"Idaho",abbr:"ID",dmv:"https://itd.idaho.gov/dmv",q:40,pass:34,pct:85,residency:90},
+  IL:{name:"Illinois",abbr:"IL",dmv:"https://ilsos.gov",q:35,pass:28,pct:80,residency:90},
+  IN:{name:"Indiana",abbr:"IN",dmv:"https://in.gov/bmv",q:50,pass:42,pct:84,residency:60},
+  IA:{name:"Iowa",abbr:"IA",dmv:"https://iowadot.gov/mvd",q:35,pass:28,pct:80,residency:30},
+  KS:{name:"Kansas",abbr:"KS",dmv:"https://ksrevenue.gov/dmv",q:25,pass:20,pct:80,residency:90},
+  KY:{name:"Kentucky",abbr:"KY",dmv:"https://drive.ky.gov",q:40,pass:32,pct:80,residency:30},
+  LA:{name:"Louisiana",abbr:"LA",dmv:"https://expresslane.org",q:40,pass:32,pct:80,residency:30},
+  ME:{name:"Maine",abbr:"ME",dmv:"https://maine.gov/sos/bmv",q:30,pass:24,pct:80,residency:30},
+  MD:{name:"Maryland",abbr:"MD",dmv:"https://mva.maryland.gov",q:25,pass:22,pct:88,residency:60},
+  MA:{name:"Massachusetts",abbr:"MA",dmv:"https://mass.gov/rmv",q:25,pass:18,pct:72,residency:0},
+  MI:{name:"Michigan",abbr:"MI",dmv:"https://michigan.gov/sos",q:50,pass:40,pct:80,residency:0},
+  MN:{name:"Minnesota",abbr:"MN",dmv:"https://dvs.dps.mn.gov",q:40,pass:32,pct:80,residency:60},
+  MS:{name:"Mississippi",abbr:"MS",dmv:"https://dps.ms.gov",q:30,pass:24,pct:80,residency:60},
+  MO:{name:"Missouri",abbr:"MO",dmv:"https://dor.mo.gov",q:25,pass:20,pct:80,residency:30},
+  MT:{name:"Montana",abbr:"MT",dmv:"https://dojmt.gov/driving",q:33,pass:27,pct:82,residency:60},
+  NE:{name:"Nebraska",abbr:"NE",dmv:"https://dmv.nebraska.gov",q:25,pass:20,pct:80,residency:30},
+  NV:{name:"Nevada",abbr:"NV",dmv:"https://dmv.nv.gov",q:50,pass:40,pct:80,residency:30},
+  NH:{name:"New Hampshire",abbr:"NH",dmv:"https://dmv.nh.gov",q:40,pass:32,pct:80,residency:60},
+  NJ:{name:"New Jersey",abbr:"NJ",dmv:"https://nj.gov/mvc",q:50,pass:40,pct:80,residency:60},
+  NM:{name:"New Mexico",abbr:"NM",dmv:"https://mvd.newmexico.gov",q:25,pass:18,pct:72,residency:0},
+  NY:{name:"New York",abbr:"NY",dmv:"https://dmv.ny.gov",q:20,pass:14,pct:70,residency:0},
+  NC:{name:"North Carolina",abbr:"NC",dmv:"https://ncdot.gov/dmv",q:25,pass:20,pct:80,residency:60},
+  ND:{name:"North Dakota",abbr:"ND",dmv:"https://dot.nd.gov",q:25,pass:20,pct:80,residency:0},
+  OH:{name:"Ohio",abbr:"OH",dmv:"https://bmv.ohio.gov",q:40,pass:30,pct:75,residency:30},
+  OK:{name:"Oklahoma",abbr:"OK",dmv:"https://oklahoma.gov/dps",q:50,pass:40,pct:80,residency:0},
+  OR:{name:"Oregon",abbr:"OR",dmv:"https://oregon.gov/odot/dmv",q:35,pass:28,pct:80,residency:0},
+  PA:{name:"Pennsylvania",abbr:"PA",dmv:"https://dmv.pa.gov",q:18,pass:15,pct:83,residency:60},
+  RI:{name:"Rhode Island",abbr:"RI",dmv:"https://dmv.ri.gov",q:25,pass:20,pct:80,residency:30},
+  SC:{name:"South Carolina",abbr:"SC",dmv:"https://scdmvonline.com",q:30,pass:24,pct:80,residency:90},
+  SD:{name:"South Dakota",abbr:"SD",dmv:"https://dps.sd.gov",q:25,pass:20,pct:80,residency:90},
+  TN:{name:"Tennessee",abbr:"TN",dmv:"https://tn.gov/safety",q:30,pass:24,pct:80,residency:30},
+  TX:{name:"Texas",abbr:"TX",dmv:"https://dps.texas.gov",q:30,pass:21,pct:70,residency:90},
+  UT:{name:"Utah",abbr:"UT",dmv:"https://dld.utah.gov",q:25,pass:20,pct:80,residency:60},
+  VT:{name:"Vermont",abbr:"VT",dmv:"https://dmv.vermont.gov",q:20,pass:16,pct:80,residency:60},
+  VA:{name:"Virginia",abbr:"VA",dmv:"https://dmv.virginia.gov",q:35,pass:30,pct:86,residency:60},
+  WA:{name:"Washington",abbr:"WA",dmv:"https://dol.wa.gov",q:40,pass:32,pct:80,residency:30},
+  WV:{name:"West Virginia",abbr:"WV",dmv:"https://transportation.wv.gov/dmv",q:25,pass:20,pct:80,residency:30},
+  WI:{name:"Wisconsin",abbr:"WI",dmv:"https://wisconsindot.gov",q:50,pass:40,pct:80,residency:60},
+  WY:{name:"Wyoming",abbr:"WY",dmv:"https://dot.state.wy.us",q:25,pass:20,pct:80,residency:0}
+};
+
+/* shared per-state rule notes: most US driving rules are uniform; we surface the
+   few values that differ (test format, residency deadline, DMV link) per state. */
+let CUR=null;
+function stateList(){ return Object.values(STATES).sort((a,b)=>a.name.localeCompare(b.name)); }
+
+function applyState(abbr){
+  CUR=STATES[abbr];
+  if(!CUR) return;
+  try{ sessionStorage.setItem("ncdmv_state",abbr); }catch(e){}
+  document.title=`${CUR.name} DMV Prep · Signs & Knowledge Test`;
+  const pct=CUR.pct;
+  // shield + eyebrow + sub + badges
+  document.getElementById("shieldAbbr").textContent=CUR.abbr;
+  document.getElementById("heroEyebrow").textContent=CUR.name+" · Class C License";
+  document.getElementById("heroSub").innerHTML=`Everything on the <span class="state-name-inline">${CUR.name}</span> signs and written knowledge tests. Know what to bring, drill the signs, and take full practice tests built for your DMV.`;
+  document.getElementById("heroBadges").innerHTML=
+    `<span class="badge">${CUR.q} questions · ${pct}% to pass</span>`+
+    `<span class="badge">Every sign &amp; rule</span>`+
+    `<span class="badge">3 practice versions</span>`;
+  // dropdown current value
+  const sw=document.getElementById("stateSwitch"); if(sw) sw.value=abbr;
+  // re-render all state-dependent content
+  renderTestParts();
+  renderChecklistNote();
+  renderDocCols();
+  renderRulesFormatCard();
+  renderProgress();
+  // reset quiz to apply new pass threshold/state label
+  if(typeof loadVersion==="function") loadVersion(typeof version!=="undefined"?version:0);
+}
+function passThreshold(){ return Math.ceil(20 * (CUR? CUR.pct:80)/100); }
+
+/* ============ ACCURATE SIGN SVG LIBRARY (100x100 viewBox) ============ */
+/* ---- arrow builders: clean, mirrorable geometry shared by all directional signs ---- */
+function aTurn(dir){ // L-shaped turn arrow, shaft from bottom-center bending toward dir
+  const m = dir==='right' ? -1 : 1, cx=50;
+  const hx = cx - m*14;                 // horizontal run end
+  const tip = `${cx-m*30},44`, b1=`${cx-m*14},34`, b2=`${cx-m*14},54`;
+  return `<path d="M${cx} 72 L${cx} 44 L${hx} 44" fill="none" stroke="#111" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polygon points="${b1} ${b2} ${tip}" fill="#111"/>`;
+}
+function aTurnSmall(dir,cx){ // smaller version for double/thru signs
+  const m = dir==='right' ? -1 : 1;
+  const hx = cx - m*11;
+  const tip=`${cx-m*23},46`, b1=`${cx-m*11},38`, b2=`${cx-m*11},54`;
+  return `<path d="M${cx} 72 L${cx} 46 L${hx} 46" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><polygon points="${b1} ${b2} ${tip}" fill="#111"/>`;
+}
+function aStraight(cx){
+  return `<path d="M${cx} 74 L${cx} 34" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/><polygon points="${cx-8},38 ${cx+8},38 ${cx},22" fill="#111"/>`;
+}
+function aKeep(dir){ // shaft angles down toward dir like a merge, head points down-outward
+  const m = dir==='right' ? 1 : -1, topX=50-m*8;
+  // diagonal shaft from upper area down to lower-outer, with arrowhead at the end
+  const x1=topX, y1=24, x2=50+m*14, y2=68;
+  const ang=Math.atan2(y2-y1, x2-x1);
+  const hl=15, hw=9;
+  const hx=x2, hy=y2;
+  const bx=hx-hl*Math.cos(ang), by=hy-hl*Math.sin(ang);
+  const px=-Math.sin(ang), py=Math.cos(ang);
+  const p1x=bx+hw*px, p1y=by+hw*py, p2x=bx-hw*px, p2y=by-hw*py;
+  return `<path d="M${x1} ${y1} L${x2} ${y2}" fill="none" stroke="#111" stroke-width="7" stroke-linecap="round"/><polygon points="${hx},${hy} ${p1x},${p1y} ${p2x},${p2y}" fill="#111"/>`;
+}
+const wRectV = inner => `<svg viewBox="0 0 100 100"><rect x="26" y="8" width="48" height="84" rx="3" fill="#fff" stroke="#111" stroke-width="3"/>${inner}</svg>`;
+const wRectWide = inner => `<svg viewBox="0 0 100 100"><rect x="16" y="8" width="68" height="84" rx="3" fill="#fff" stroke="#111" stroke-width="3"/>${inner}</svg>`;
+const wProhibit = inner => `<svg viewBox="0 0 100 100"><rect x="9" y="9" width="82" height="82" rx="4" fill="#fff" stroke="#111" stroke-width="3"/>${inner}<circle cx="50" cy="50" r="36" fill="none" stroke="#d8232a" stroke-width="7"/><line x1="24" y1="76" x2="76" y2="24" stroke="#d8232a" stroke-width="7"/></svg>`;
+
+const S = {
+  /* ---- shape demo tiles ---- */
+  shapeOctagon:`<svg viewBox="0 0 100 100"><polygon points="32,8 68,8 92,32 92,68 68,92 32,92 8,68 8,32" fill="#d8232a" stroke="#111" stroke-width="3"/><text x="50" y="58" font-size="18" fill="#fff" font-weight="900" text-anchor="middle" font-family="Arial">STOP</text></svg>`,
+  shapeTriangle:`<svg viewBox="0 0 100 100"><polygon points="50,90 8,18 92,18" fill="#d8232a" stroke="#111" stroke-width="3"/><polygon points="50,79 21,26 79,26" fill="#fff"/><text x="50" y="45" font-size="11" fill="#d8232a" font-weight="900" text-anchor="middle" font-family="Arial">YIELD</text></svg>`,
+  shapeDiamond:`<svg viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="#f5c518" stroke="#111" stroke-width="3"/><text x="50" y="56" font-size="34" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">!</text></svg>`,
+  shapePentagon:`<svg viewBox="0 0 100 100"><polygon points="50,8 86,40 72,88 28,88 14,40" fill="#caf36a" stroke="#111" stroke-width="3"/></svg>`,
+  shapeRound:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#f5c518" stroke="#111" stroke-width="3"/><line x1="24" y1="24" x2="76" y2="76" stroke="#111" stroke-width="6"/><line x1="76" y1="24" x2="24" y2="76" stroke="#111" stroke-width="6"/><text x="40" y="46" font-size="16" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">R</text><text x="60" y="62" font-size="16" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">R</text></svg>`,
+  shapePennant:`<svg viewBox="0 0 100 100"><polygon points="12,30 92,42 12,54" fill="#f5c518" stroke="#111" stroke-width="3"/><text x="40" y="46" font-size="8" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">NO PASS</text></svg>`,
+  shapeRectV:`<svg viewBox="0 0 100 100"><rect x="26" y="10" width="48" height="80" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="34" font-size="11" fill="#111" font-weight="700" text-anchor="middle" font-family="Arial">SPEED</text><text x="50" y="48" font-size="11" fill="#111" font-weight="700" text-anchor="middle" font-family="Arial">LIMIT</text><text x="50" y="76" font-size="24" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">55</text></svg>`,
+  shapeRectH:`<svg viewBox="0 0 100 100"><rect x="8" y="34" width="84" height="32" rx="3" fill="#1d4e3f" stroke="#111" stroke-width="2"/><text x="50" y="55" font-size="14" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">EXIT 12</text></svg>`,
+  shapeCrossbuck:`<svg viewBox="0 0 100 100"><rect x="6" y="36" width="88" height="12" rx="2" fill="#fff" stroke="#111" stroke-width="2.5" transform="rotate(35 50 42)"/><rect x="6" y="36" width="88" height="12" rx="2" fill="#fff" stroke="#111" stroke-width="2.5" transform="rotate(-35 50 42)"/><text x="50" y="80" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">RAILROAD</text></svg>`,
+
+  /* ---- regulatory ---- */
+  stop:`<svg viewBox="0 0 100 100"><polygon points="32,7 68,7 93,32 93,68 68,93 32,93 7,68 7,32" fill="#d8232a" stroke="#fff" stroke-width="3.5"/><polygon points="32,7 68,7 93,32 93,68 68,93 32,93 7,68 7,32" fill="none" stroke="#111" stroke-width="1.5"/><text x="50" y="60" font-size="22" fill="#fff" font-weight="900" text-anchor="middle" font-family="Arial">STOP</text></svg>`,
+  yield:`<svg viewBox="0 0 100 100"><polygon points="50,92 6,14 94,14" fill="#d8232a" stroke="#fff" stroke-width="3.5"/><polygon points="50,92 6,14 94,14" fill="none" stroke="#111" stroke-width="1.5"/><polygon points="50,79 21,25 79,25" fill="#fff"/><text x="50" y="44" font-size="13" fill="#d8232a" font-weight="900" text-anchor="middle" font-family="Arial">YIELD</text></svg>`,
+  speed:`<svg viewBox="0 0 100 100"><rect x="24" y="8" width="52" height="84" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="28" font-size="11" fill="#111" font-weight="700" text-anchor="middle" font-family="Arial">SPEED</text><text x="50" y="42" font-size="11" fill="#111" font-weight="700" text-anchor="middle" font-family="Arial">LIMIT</text><text x="50" y="76" font-size="28" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">55</text></svg>`,
+  donotenter:`<svg viewBox="0 0 100 100"><rect x="9" y="9" width="82" height="82" rx="4" fill="#fff" stroke="#111" stroke-width="3"/><circle cx="50" cy="42" r="27" fill="#d8232a"/><rect x="31" y="37" width="38" height="10" fill="#fff"/><text x="50" y="82" font-size="10.5" fill="#d8232a" font-weight="900" text-anchor="middle" font-family="Arial">DO NOT ENTER</text></svg>`,
+  wrongway:`<svg viewBox="0 0 100 100"><rect x="16" y="22" width="68" height="56" rx="3" fill="#d8232a" stroke="#111" stroke-width="2.5"/><text x="50" y="48" font-size="15" fill="#fff" font-weight="900" text-anchor="middle" font-family="Arial">WRONG</text><text x="50" y="66" font-size="15" fill="#fff" font-weight="900" text-anchor="middle" font-family="Arial">WAY</text></svg>`,
+  nobikes:`<svg viewBox="0 0 100 100"><rect x="9" y="9" width="82" height="82" rx="4" fill="#fff" stroke="#111" stroke-width="3"/><circle cx="35" cy="58" r="11" fill="none" stroke="#111" stroke-width="3"/><circle cx="65" cy="58" r="11" fill="none" stroke="#111" stroke-width="3"/><path d="M35 58 L47 43 L61 43 M47 43 L53 58 L65 58" fill="none" stroke="#111" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#d8232a" stroke-width="7"/><line x1="22" y1="78" x2="78" y2="22" stroke="#d8232a" stroke-width="7"/></svg>`,
+  leftonly: wRectV(aTurn('left')+`<text x="50" y="84" font-size="12" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">ONLY</text>`),
+  thruleft: wRectWide(aStraight(62)+aTurnSmall('left',40)),
+  leftlanemust:`<svg viewBox="0 0 100 100"><rect x="14" y="20" width="72" height="60" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="38" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">LEFT LANE</text><text x="50" y="52" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">MUST</text><text x="50" y="66" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">TURN LEFT</text></svg>`,
+  noleft: wProhibit(aTurn('left')),
+  noright: wProhibit(aTurn('right')),
+  nouturn:`<svg viewBox="0 0 100 100"><rect x="9" y="9" width="82" height="82" rx="4" fill="#fff" stroke="#111" stroke-width="3"/><path d="M37 68 L37 47 a13 13 0 0 1 26 0 L63 58" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/><polygon points="56,58 63,68 70,58" fill="#111"/><circle cx="50" cy="50" r="35" fill="none" stroke="#d8232a" stroke-width="6.5"/><line x1="25" y1="75" x2="75" y2="25" stroke="#d8232a" stroke-width="6.5"/></svg>`,
+  doubleleft: wRectWide(aTurnSmall('left',38)+aTurnSmall('left',58)+`<text x="50" y="86" font-size="10" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">ONLY</text>`),
+  oneway:`<svg viewBox="0 0 100 100"><rect x="10" y="32" width="80" height="36" rx="2" fill="#111"/><text x="44" y="48" font-size="13" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">ONE</text><text x="44" y="61" font-size="13" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">WAY</text><path d="M64 50 L80 50 M75 45 L82 50 L75 55" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  keepright: wRectV(aKeep('right')),
+  keepleft: wRectV(aKeep('left')),
+  nopass:`<svg viewBox="0 0 100 100"><rect x="24" y="8" width="52" height="84" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="36" font-size="13" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">DO</text><text x="50" y="54" font-size="13" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">NOT</text><text x="50" y="72" font-size="13" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">PASS</text></svg>`,
+  passwithcare:`<svg viewBox="0 0 100 100"><rect x="18" y="14" width="64" height="72" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="38" font-size="12" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">PASS</text><text x="50" y="54" font-size="12" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">WITH</text><text x="50" y="70" font-size="12" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">CARE</text></svg>`,
+  slowertraffic:`<svg viewBox="0 0 100 100"><rect x="20" y="12" width="60" height="76" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="33" font-size="10" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">SLOWER</text><text x="50" y="47" font-size="10" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">TRAFFIC</text><text x="50" y="61" font-size="10" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">KEEP</text><text x="50" y="75" font-size="10" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">RIGHT</text></svg>`,
+  keepoffmedian:`<svg viewBox="0 0 100 100"><rect x="22" y="14" width="56" height="72" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="40" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">KEEP</text><text x="50" y="55" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">OFF</text><text x="50" y="70" font-size="11" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">MEDIAN</text></svg>`,
+  handicap:`<svg viewBox="0 0 100 100"><rect x="14" y="14" width="72" height="72" rx="3" fill="#fff" stroke="#1f6fb2" stroke-width="3"/><text x="50" y="27" font-size="9" fill="#1f6fb2" font-weight="800" text-anchor="middle" font-family="Arial">RESERVED</text><text x="50" y="38" font-size="9" fill="#1f6fb2" font-weight="800" text-anchor="middle" font-family="Arial">PARKING</text><circle cx="50" cy="60" r="15" fill="#1f6fb2"/><circle cx="45" cy="53" r="3.2" fill="#fff"/><path d="M43 60 h8 l4 10 M43 60 a9 9 0 1 0 9 9" fill="none" stroke="#fff" stroke-width="2.6"/></svg>`,
+  busstop:`<svg viewBox="0 0 100 100"><rect x="20" y="14" width="60" height="72" rx="3" fill="#fff" stroke="#d8232a" stroke-width="3"/><rect x="20" y="14" width="60" height="17" fill="#d8232a"/><text x="50" y="26" font-size="9.5" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">NO PARKING</text><text x="50" y="52" font-size="13" fill="#d8232a" font-weight="900" text-anchor="middle" font-family="Arial">BUS</text><text x="50" y="68" font-size="13" fill="#d8232a" font-weight="900" text-anchor="middle" font-family="Arial">STOP</text></svg>`,
+  hourparking:`<svg viewBox="0 0 100 100"><rect x="20" y="16" width="60" height="68" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="34" font-size="10" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">ONE HOUR</text><text x="50" y="47" font-size="10" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">PARKING</text><text x="50" y="60" font-size="9" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">9AM-7PM</text></svg>`,
+  railroadCircle:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#f5c518" stroke="#111" stroke-width="3"/><line x1="24" y1="24" x2="76" y2="76" stroke="#111" stroke-width="6"/><line x1="76" y1="24" x2="24" y2="76" stroke="#111" stroke-width="6"/><text x="40" y="46" font-size="16" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">R</text><text x="60" y="62" font-size="16" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">R</text></svg>`,
+  donotstop:`<svg viewBox="0 0 100 100"><rect x="28" y="8" width="44" height="84" rx="3" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="28" font-size="9.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">DO NOT</text><text x="50" y="44" font-size="9.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">STOP</text><text x="50" y="60" font-size="9.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">ON</text><text x="50" y="76" font-size="9.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">TRACKS</text></svg>`,
+
+  /* ---- warning (yellow diamonds + special) ---- */
+  signalAhead:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><rect x="42" y="28" width="16" height="42" rx="6" fill="#111"/><circle cx="50" cy="37" r="4.5" fill="#d8232a"/><circle cx="50" cy="49" r="4.5" fill="#f5c518"/><circle cx="50" cy="61" r="4.5" fill="#2ca05a"/></svg>`,
+  merge:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M40 74 L40 38 M40 38 L33 46 M40 38 L47 46" stroke="#111" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M64 74 C64 54 50 50 44 46" stroke="#111" stroke-width="4.5" fill="none" stroke-linecap="round"/></svg>`,
+  laneDrop:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><rect x="40" y="30" width="6" height="42" fill="#111"/><path d="M60 30 L60 52 C60 64 53 68 48 70" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`,
+  dividedHwy:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M42 74 L42 52 a8 8 0 0 1 16 0 L58 74" stroke="#111" stroke-width="4.5" fill="none"/><path d="M42 40 L42 28 M42 28 L37 34 M42 28 L47 34" stroke="#111" stroke-width="3.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 40 L58 28 M58 28 L53 34 M58 28 L63 34" stroke="#111" stroke-width="3.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  dividedEnds:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M42 28 L42 50 a8 8 0 0 0 16 0 L58 28" stroke="#111" stroke-width="4.5" fill="none"/><path d="M42 62 L42 74 M42 74 L37 68 M42 74 L47 68" stroke="#111" stroke-width="3.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 62 L58 74 M58 74 L53 68 M58 74 L63 68" stroke="#111" stroke-width="3.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  twoway:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M42 70 L42 34 M42 34 L37 40 M42 34 L47 40" stroke="#111" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 30 L58 66 M58 66 L53 60 M58 66 L63 60" stroke="#111" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  deer:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M37 72 C37 58 41 54 45 51 C40 47 43 40 47 41 C48 35 53 35 54 41 C59 41 60 46 60 50 L67 41 M60 50 C65 53 68 58 68 70" fill="none" stroke="#111" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M45 53 L45 72 M61 56 L63 72" stroke="#111" stroke-width="3.6" stroke-linecap="round"/></svg>`,
+  cattle:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M33 48 C30 41 37 40 41 45 L41 42 C41 37 59 37 59 42 L59 45 C63 40 70 41 67 48 C67 63 59 70 50 70 C41 70 33 63 33 48 Z" fill="#111"/><path d="M33 48 C28 46 28 40 32 41 M67 48 C72 46 72 40 68 41" fill="none" stroke="#111" stroke-width="3"/><rect x="43" y="66" width="3.5" height="8" fill="#111"/><rect x="53" y="66" width="3.5" height="8" fill="#111"/></svg>`,
+  farmmach:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><circle cx="40" cy="62" r="13" fill="#111"/><circle cx="40" cy="62" r="5" fill="#f5c518"/><circle cx="67" cy="63" r="7" fill="#111"/><path d="M34 50 L44 42 L58 42 L62 56" fill="#111"/></svg>`,
+  lowclear:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M38 36 L38 26 M38 26 L33 32 M38 26 L43 32" stroke="#111" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M62 36 L62 26 M62 26 L57 32 M62 26 L67 32" stroke="#111" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="34" y1="36" x2="66" y2="36" stroke="#111" stroke-width="3.5"/><text x="50" y="64" font-size="15" fill="#111" font-weight="900" text-anchor="middle" font-family="Arial">12'6"</text></svg>`,
+  rightturn:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M40 74 L40 52 C40 44 47 44 54 44" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round"/><polygon points="50,36 50,52 66,44" fill="#111"/></svg>`,
+  curveRight:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M42 76 L42 54 C42 42 58 42 58 32" stroke="#111" stroke-width="5.5" fill="none" stroke-linecap="round"/><polygon points="50,32 66,32 58,18" fill="#111"/></svg>`,
+  windingRoad:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M44 78 C44 66 60 64 60 52 C60 40 44 40 44 30" stroke="#111" stroke-width="5.5" fill="none" stroke-linecap="round"/><polygon points="36,32 52,32 44,18" fill="#111"/></svg>`,
+  sideRoad:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><rect x="44" y="26" width="11" height="48" fill="#111"/><path d="M55 52 L70 38" stroke="#111" stroke-width="11" stroke-linecap="butt"/></svg>`,
+  crossRoad:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><rect x="44" y="28" width="12" height="44" fill="#111"/><rect x="28" y="44" width="44" height="12" fill="#111"/></svg>`,
+  hill:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M30 58 L62 36 L70 36 L70 58 Z" fill="#111"/><rect x="28" y="58" width="44" height="5" fill="#111"/></svg>`,
+  slippery:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><rect x="40" y="32" width="22" height="11" rx="3" fill="#111"/><rect x="44" y="40" width="14" height="20" rx="2" fill="#111"/><circle cx="44" cy="62" r="5" fill="#111"/><circle cx="58" cy="62" r="5" fill="#111"/><path d="M36 70 q4 -6 8 0 M52 70 q4 -6 8 0" fill="none" stroke="#111" stroke-width="2.6"/></svg>`,
+  bikecross:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><circle cx="36" cy="60" r="10" fill="none" stroke="#111" stroke-width="3"/><circle cx="64" cy="60" r="10" fill="none" stroke="#111" stroke-width="3"/><path d="M36 60 L47 45 L60 45 M47 45 L53 60 L64 60" fill="none" stroke="#111" stroke-width="3"/></svg>`,
+  softShoulder:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><text x="50" y="46" font-size="12" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">SOFT</text><text x="50" y="62" font-size="10.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">SHOULDER</text></svg>`,
+  stopAhead:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><path d="M44 78 L44 60 M56 78 L56 60" stroke="#111" stroke-width="4.5"/><polygon points="42,42 58,42 65,49 65,57 58,64 42,64 35,57 35,49" fill="#d8232a"/><text x="50" y="56" font-size="7.5" fill="#fff" font-weight="900" text-anchor="middle" font-family="Arial">STOP</text></svg>`,
+  yieldAhead:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#f5c518" stroke="#111" stroke-width="3"/><polygon points="50,68 33,40 67,40" fill="#fff" stroke="#111" stroke-width="3"/><text x="50" y="80" font-size="8.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">AHEAD</text></svg>`,
+  nopassZone:`<svg viewBox="0 0 100 100"><polygon points="10,30 92,42 10,54" fill="#f5c518" stroke="#111" stroke-width="3"/><text x="38" y="40" font-size="7.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">NO</text><text x="38" y="49" font-size="7.5" fill="#111" font-weight="800" text-anchor="middle" font-family="Arial">PASSING</text></svg>`,
+  roadClosed:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#e8531a" stroke="#111" stroke-width="3"/><text x="50" y="44" font-size="11" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">ROAD</text><text x="50" y="58" font-size="11" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">CLOSED</text><text x="50" y="71" font-size="8.5" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">1500 FT</text></svg>`,
+  workZone:`<svg viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#e8531a" stroke="#111" stroke-width="3"/><path d="M42 40 a8 8 0 0 1 16 0 v4 h-16 z" fill="#111"/><rect x="46" y="44" width="8" height="14" fill="#111"/><path d="M38 70 L50 58 L62 70 Z" fill="#111"/></svg>`,
+  pedCross:`<svg viewBox="0 0 100 100"><polygon points="50,8 78,50 50,92 22,50" fill="#caf36a" stroke="#111" stroke-width="3"/><circle cx="50" cy="34" r="5" fill="#111"/><path d="M50 40 L50 58 M50 46 L42 52 M50 46 L58 52 M50 58 L44 72 M50 58 L56 72" stroke="#111" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`,
+  school:`<svg viewBox="0 0 100 100"><polygon points="50,8 78,50 50,92 22,50" fill="#caf36a" stroke="#111" stroke-width="3"/><circle cx="43" cy="40" r="5" fill="#111"/><circle cx="58" cy="42" r="5" fill="#111"/><path d="M39 50 l-4 18 M47 50 l0 18 M55 50 l2 18 M61 52 l4 16" stroke="#111" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M37 52 h26" stroke="#111" stroke-width="3.5"/></svg>`,
+
+  /* ---- guide / service ---- */
+  hospital:`<svg viewBox="0 0 100 100"><rect x="14" y="22" width="72" height="56" rx="3" fill="#1f6fb2" stroke="#111" stroke-width="2.5"/><rect x="44" y="34" width="12" height="32" fill="#fff"/><rect x="34" y="44" width="32" height="12" fill="#fff"/><text x="26" y="52" font-size="16" fill="#fff" font-weight="900" font-family="Arial">H</text></svg>`,
+  rest:`<svg viewBox="0 0 100 100"><rect x="14" y="26" width="72" height="48" rx="3" fill="#1f6fb2" stroke="#111" stroke-width="2.5"/><text x="50" y="56" font-size="16" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">REST</text></svg>`,
+  gas:`<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" rx="3" fill="#1f6fb2" stroke="#111" stroke-width="2.5"/><rect x="34" y="32" width="22" height="38" fill="#fff"/><rect x="38" y="38" width="14" height="10" fill="#1f6fb2"/><path d="M56 40 l8 6 v18 a4 4 0 0 1 -8 0" fill="none" stroke="#fff" stroke-width="3"/></svg>`,
+  exit:`<svg viewBox="0 0 100 100"><rect x="8" y="30" width="84" height="40" rx="3" fill="#1d4e3f" stroke="#111" stroke-width="2.5"/><text x="44" y="56" font-size="16" fill="#fff" font-weight="800" text-anchor="middle" font-family="Arial">EXIT</text><path d="M70 50 L84 50 M79 45 L86 50 L79 55" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  recreation:`<svg viewBox="0 0 100 100"><rect x="16" y="22" width="68" height="56" rx="3" fill="#6b3f1d" stroke="#111" stroke-width="2.5"/><path d="M50 36 L40 60 L60 60 Z" fill="#2ca05a"/><path d="M50 44 L43 60 L57 60 Z" fill="#1d4e3f"/><rect x="48" y="60" width="4" height="8" fill="#fff"/></svg>`
+};
+
+/* ============ REAL MUTCD SIGN IMAGES (Wikimedia Commons) ============ */
+/* Loaded online via Special:FilePath. If an image fails to load (offline or
+   404), the drawn SVG fallback in S[] is swapped in, so nothing looks broken. */
+const MUTCD = {
+  shapeOctagon:"MUTCD R1-1.svg", shapeTriangle:"MUTCD R1-2.svg",
+  shapeDiamond:"MUTCD W1-2R.svg", shapePentagon:"MUTCD S1-1.svg",
+  shapeRound:"MUTCD W10-1.svg", shapeCrossbuck:"MUTCD R15-1.svg",
+  shapePennant:"MUTCD W14-3.svg", shapeRectV:"MUTCD R2-1.svg",
+  stop:"MUTCD R1-1.svg", yield:"MUTCD R1-2.svg", speed:"MUTCD R2-1.svg",
+  donotenter:"MUTCD R5-1.svg", wrongway:"MUTCD R5-1a.svg", nobikes:"MUTCD R5-6.svg",
+  leftonly:"MUTCD R3-5L.svg", thruleft:"MUTCD R3-6L.svg", leftlanemust:"MUTCD R3-7L.svg",
+  noleft:"MUTCD R3-2.svg", noright:"MUTCD R3-1.svg", nouturn:"MUTCD R3-4.svg",
+  doubleleft:"MUTCD R3-5L.svg", oneway:"MUTCD R6-1R.svg",
+  keepright:"MUTCD R4-7.svg", keepleft:"MUTCD R4-8.svg",
+  nopass:"MUTCD R4-1.svg", passwithcare:"MUTCD R4-2.svg", slowertraffic:"MUTCD R4-3.svg",
+  keepoffmedian:"MUTCD R4-19.svg", handicap:"MUTCD R7-8.svg",
+  railroadCircle:"MUTCD W10-1.svg", donotstop:"MUTCD R8-8.svg",
+  signalAhead:"MUTCD W3-3.svg", merge:"MUTCD W4-1R.svg", laneDrop:"MUTCD W4-2R.svg",
+  dividedHwy:"MUTCD W6-1.svg", dividedEnds:"MUTCD W6-2.svg", twoway:"MUTCD W6-3.svg",
+  deer:"MUTCD W11-3.svg", cattle:"MUTCD W11-4.svg", farmmach:"MUTCD W11-5.svg",
+  lowclear:"MUTCD W12-2P.svg", rightturn:"MUTCD W1-1R.svg", curveRight:"MUTCD W1-2R.svg",
+  windingRoad:"MUTCD W1-5R.svg", sideRoad:"MUTCD W2-2R.svg", crossRoad:"MUTCD W2-1.svg",
+  hill:"MUTCD W7-1.svg", slippery:"MUTCD W8-5.svg", bikecross:"MUTCD W11-1.svg",
+  softShoulder:"MUTCD W8-4.svg", stopAhead:"MUTCD W3-1.svg", yieldAhead:"MUTCD W3-2.svg",
+  nopassZone:"MUTCD W14-3.svg", roadClosed:"MUTCD R11-2.svg", workZone:"MUTCD W21-1.svg",
+  pedCross:"MUTCD W11-2.svg", school:"MUTCD S1-1.svg"
+};
+const COMMONS = "https://commons.wikimedia.org/wiki/Special:FilePath/";
+/* Returns markup for a sign: real MUTCD image with the drawn SVG as fallback.
+   The fallback SVG is stored as a data attribute and swapped in on error. */
+function signMarkup(key, cls){
+  const fileName = MUTCD[key];
+  const fallback = (S[key]||"").replace(/"/g,"&quot;");
+  if(!fileName){ return `<span class="signwrap ${cls||''}">${S[key]||""}</span>`; }
+  const url = COMMONS + encodeURIComponent(fileName.replace(/ /g,"_"));
+  return `<span class="signwrap ${cls||''}"><img src="${url}" alt="${key}" loading="lazy"
+    onerror="this.outerHTML=this.getAttribute('data-fb')" data-fb="${fallback}"></span>`;
+}
+
+/* ============ DATA: shapes ============ */
+const SHAPES = [
+  ["shapeOctagon","Octagon","Always means STOP. Only used for stop signs."],
+  ["shapeTriangle","Triangle (point down)","Always means YIELD."],
+  ["shapeDiamond","Diamond","Warning of a hazard or change ahead."],
+  ["shapePentagon","Pentagon","School zone or school crossing."],
+  ["shapeRound","Round","Railroad crossing ahead."],
+  ["shapeCrossbuck","Crossbuck (X)","Railroad crossing at the tracks."],
+  ["shapePennant","Pennant","No-passing zone, on the left side of the road."],
+  ["shapeRectV","Vertical rectangle","Regulatory: a rule you must obey."],
+  ["shapeRectH","Horizontal rectangle","Guide or information: directions and distances."]
+];
+
+/* ============ DATA: regulatory ============ */
+const REG_SIGNS = [
+  ["stop","Stop","Come to a full stop; yield to traffic and pedestrians, then go when clear"],
+  ["yield","Yield","Slow down and give the right of way to other traffic"],
+  ["speed","Speed Limit","Maximum legal speed in ideal conditions"],
+  ["donotenter","Do Not Enter","Do not enter; wrong way or restricted road"],
+  ["wrongway","Wrong Way","You are going against traffic; turn around"],
+  ["nobikes","No Bicycles","Bicycles are prohibited on this road"],
+  ["leftonly","Left Turn Only","This lane must turn left"],
+  ["thruleft","Thru &amp; Left","This lane may go straight or turn left"],
+  ["leftlanemust","Left Lane Must Turn Left","Vehicles in the left lane are required to turn left"],
+  ["noleft","No Left Turn","Left turns are prohibited here"],
+  ["noright","No Right Turn","Right turns are prohibited here"],
+  ["nouturn","No U-Turn","U-turns are prohibited here"],
+  ["doubleleft","Double Left Turns","Two lanes may turn left at the same time"],
+  ["oneway","One Way","Traffic flows in one direction only"],
+  ["keepright","Keep Right","Keep to the right of the median or obstruction"],
+  ["keepleft","Keep Left","Keep to the left of the median or obstruction"],
+  ["nopass","Do Not Pass","Passing is prohibited in this zone"],
+  ["passwithcare","Pass With Care","Passing is allowed, but only when safe"],
+  ["slowertraffic","Slower Traffic Keep Right","Slow vehicles must use the right lane"],
+  ["keepoffmedian","Keep Off Median","Do not drive on or across the median"],
+  ["handicap","Reserved Parking","Accessible parking; permit required"],
+  ["busstop","Bus Stop / No Parking","No parking; this space is reserved for buses"],
+  ["hourparking","Time-Limited Parking","Parking allowed only for the posted time and hours"],
+  ["railroadCircle","Railroad Crossing","Tracks ahead; look, listen, and slow down"],
+  ["donotstop","Do Not Stop On Tracks","Never stop on railroad tracks for any reason"]
+];
+
+/* ============ DATA: warning ============ */
+const WARN_SIGNS = [
+  ["signalAhead","Signal Ahead","A traffic light is ahead; be ready to stop"],
+  ["merge","Merging Traffic","Traffic merges from the side; adjust your speed"],
+  ["laneDrop","Lane Drop","A lane ends ahead; merge over"],
+  ["dividedHwy","Divided Highway","The road divides into separated lanes ahead"],
+  ["dividedEnds","Divided Highway Ends","Two-way traffic resumes ahead"],
+  ["twoway","Two-Way Traffic","You are leaving a divided road; oncoming traffic ahead"],
+  ["deer","Deer Crossing","Watch for deer, especially at dawn and dusk"],
+  ["cattle","Cattle Crossing","Livestock may be on or near the road"],
+  ["farmmach","Farm Machinery","Slow farm equipment may be on the road"],
+  ["lowclear","Low Clearance","Overpass height limit ahead"],
+  ["rightturn","Right Turn","A sharp right turn is ahead"],
+  ["curveRight","Curve Right","The road curves; reduce speed"],
+  ["windingRoad","Winding Road","A series of curves is ahead"],
+  ["sideRoad","Side Road","Another road joins from the side"],
+  ["crossRoad","Cross Road","A four-way intersection is ahead"],
+  ["hill","Hill / Steep Grade","A steep downgrade is ahead; check your brakes"],
+  ["slippery","Slippery When Wet","The road is slick in rain; slow down"],
+  ["bikecross","Bike Crossing","Bicycles may cross here"],
+  ["softShoulder","Soft Shoulder","The shoulder edge is unstable; stay on the pavement"],
+  ["stopAhead","Stop Ahead","A stop sign is ahead; prepare to stop"],
+  ["yieldAhead","Yield Ahead","A yield sign is ahead"],
+  ["nopassZone","No Passing Zone","Pennant on the left; do not pass"],
+  ["roadClosed","Road Closed","The road is closed ahead; find another route"],
+  ["workZone","Work Zone","Construction ahead; orange means a work zone"],
+  ["pedCross","Pedestrian Crossing","People may be crossing; yield to them"],
+  ["school","School Zone","School area; watch for children and reduce speed"]
+];
+
+/* ============ DATA: guide / service ============ */
+const GUIDE_SIGNS = [
+  ["exit","Exit","Freeway exit and the direction to take it"],
+  ["hospital","Hospital","A hospital is nearby in this direction"],
+  ["gas","Gas / Fuel","Fuel is available at this exit"],
+  ["rest","Rest Area","A rest area is ahead"],
+  ["recreation","Recreation Area","A park or recreation area is ahead"]
+];
+
+/* ============ DATA: test parts & documents ============ */
+function buildTestParts(){
+  const q=CUR?CUR.q:25, pc=CUR?CUR.pass:20, pct=CUR?CUR.pct:80;
+  return [
+  {icon:"\uD83D\uDC41", title:"Vision", tag:"Eyesight screening",
+   items:["Look into the machine or read the chart","Wear your glasses or contacts if you use them","If you fail without them, you get a corrective-lenses restriction"]},
+  {icon:"\uD83D\uDEA6", title:"Traffic signs", tag:"Identify by shape & color",
+   items:["Name each sign and say what it means","Covered fully in the Signs tab here","All answers come from your state handbook"]},
+  {icon:"\uD83D\uDCDD", title:"Knowledge", tag:`${q} questions, ${pct}% to pass`,
+   items:["Multiple choice on traffic laws and safe driving",`Need ${pc} of ${q} correct`,"Audio version often available on request","Retake rules vary; usually a short wait"]},
+  {icon:"\uD83D\uDE97", title:"Road test", tag:"On-the-road driving",
+   items:["Taken after you pass the other three","Required for a first-time license","Bring a registered, insured vehicle","Examiner checks the car's documents too"]}
+  ];
+}
+
+function buildDocCols(){
+  const st = CUR ? CUR.name : "your state";
+  return [
+  {title:"Proof of identity & age", note:"one document",
+   items:["Valid US passport, OR","Certified birth certificate, OR","A current driver license or permit from another state also works as ID"]},
+  {title:"Social Security", note:"one document",
+   items:["Social Security card (no photocopy), OR","W-2 or 1099 with full SSN, OR","Pay stub showing your name and full SSN"]},
+  {title:`${st} residency`, note:"usually two documents",
+   items:[`A signed ${st} lease or mortgage statement`,`Plus one more: utility bill, bank statement, or pay stub with your ${st} address`,`An auto insurance policy at your ${st} address also counts`]},
+  {title:"Insurance (road test / license)", note:"printed, not digital",
+   items:[`Liability insurance from a carrier licensed in ${st}`,"An insurance card, binder, or your state's proof-of-insurance form","Must show your name; digital images are often not accepted"]}
+  ];
+}
+
+/* ============ DATA: rules ============ */
+const RULES = [
+  {t:"School bus stopping rules", star:true, html:`
+    <p>The single most-tested topic. Whether oncoming traffic stops depends on what separates you from the bus.</p>
+    <ul>
+      <li><strong>Two-lane road:</strong> all traffic in both directions stops.</li>
+      <li><strong>Two-lane with a center turn lane:</strong> all traffic in both directions stops.</li>
+      <li><strong>Four-lane with no median:</strong> all traffic in both directions stops.</li>
+      <li><strong>Four-lane with a center turn lane:</strong> only traffic behind the bus stops.</li>
+      <li><strong>Divided highway with a median:</strong> only traffic behind the bus stops.</li>
+    </ul>
+    <p>Shortcut: a physical median or center turn lane between you and the bus means oncoming traffic keeps going. Otherwise everyone stops. Bus max speed is 45 mph.</p>`},
+  {t:"Right of way", star:true, html:`
+    <ul>
+      <li><strong>Four-way stop:</strong> first to arrive goes first; a tie goes to the vehicle on the right.</li>
+      <li><strong>Left turns</strong> yield to oncoming traffic.</li>
+      <li><strong>Roundabout:</strong> yield to traffic already in the circle.</li>
+      <li><strong>Pedestrians</strong> get the right of way at marked and unmarked crosswalks; yield even when they are not strictly entitled to it.</li>
+      <li><strong>Blind pedestrian</strong> with a white cane or guide dog always gets the right of way.</li>
+      <li><strong>Emergency vehicles</strong> with lights or siren: pull to the right edge and stop until they pass.</li>
+    </ul>`},
+  {t:"Headlights & visibility", star:true, html:`
+    <ul>
+      <li>Required from <strong>30 minutes after sunset to 30 minutes before sunrise</strong>.</li>
+      <li>Required any time visibility is under <strong>500 feet</strong>.</li>
+      <li>Use headlights, not just parking lights, in rain, fog, or snow.</li>
+      <li>Use low beams in fog; high beams reflect back and reduce your vision.</li>
+    </ul>`},
+  {t:"Move Over law", star:false, html:`
+    <p>When an emergency or utility vehicle is stopped on the roadside with its lights on:</p>
+    <ul>
+      <li><strong>Multiple lanes your direction:</strong> move over one lane away from it.</li>
+      <li><strong>One lane or can't move safely:</strong> slow to a reduced, safe speed as you pass.</li>
+    </ul>`},
+  {t:"Speed & following distance", star:false, html:`
+    <ul>
+      <li>The posted limit is the maximum for ideal conditions, not a target.</li>
+      <li>Leave enough room to stop safely; add distance in rain, fog, and ice.</li>
+      <li>Slow down before a curve, not during it.</li>
+      <li>On a steep downgrade, shift to a lower gear to save your brakes.</li>
+    </ul>`},
+  {t:"Hazardous conditions", star:false, html:`
+    <ul>
+      <li><strong>Hydroplaning:</strong> ease off the gas; do not brake hard.</li>
+      <li><strong>Bridges and overpasses ice first</strong>, before the regular road.</li>
+      <li><strong>Skid:</strong> steer in the direction you want the front of the car to go.</li>
+      <li>If your brakes get wet, dry them by pressing the pedal lightly while driving slowly.</li>
+    </ul>`},
+  {t:"Work zones", star:false, html:`
+    <ul>
+      <li>Black-on-orange signs mean you are entering a work zone; stay alert.</li>
+      <li>Fines are often doubled in work zones.</li>
+      <li>Obey flaggers; their directions override signs and signals.</li>
+    </ul>`},
+  {t:"Alcohol & DWI", star:false, html:`
+    <ul>
+      <li>Everyone is impaired at <strong>0.08% BAC</strong> (0.04% in a commercial vehicle).</li>
+      <li>First DWI: one-year license revocation.</li>
+      <li>Refusing the breath or blood test: immediate 30-day revocation plus a 12-month DMV revocation.</li>
+      <li><strong>Under 21:</strong> any detectable alcohol means a one-year revocation.</li>
+      <li>Only time sobers you up; coffee and cold showers do not.</li>
+    </ul>`},
+  {t:"Seat belts & child safety", star:false, html:`
+    <ul>
+      <li>Driver and all passengers must be belted whenever the vehicle is in motion.</li>
+      <li>Under 16: an age and weight appropriate restraint.</li>
+      <li>Under 8 and under 80 lbs: a weight-appropriate child restraint.</li>
+      <li>Air bag plus a rear seat: a child under 5 and under 40 lbs rides in the rear.</li>
+    </ul>`},
+  {t:"Cell phones & distraction", star:false, html:`
+    <ul>
+      <li>Texting or emailing while driving is illegal for everyone.</li>
+      <li>Under 18: no cell phone use at all while driving, except a 911 emergency.</li>
+      <li>Pull over to a safe spot if you must use your phone.</li>
+    </ul>`},
+  {t:"Pavement markings", star:false, html:`
+    <ul>
+      <li><strong>Yellow lines</strong> separate traffic moving in opposite directions.</li>
+      <li><strong>White lines</strong> separate traffic moving in the same direction.</li>
+      <li>A solid line means do not cross or pass; a broken line means you may.</li>
+      <li>A solid yellow on your side means no passing.</li>
+    </ul>`},
+  {t:"Points & suspension", star:false, html:`
+    <ul>
+      <li>7 points may land you in a driver improvement clinic.</li>
+      <li>12 points in three years may suspend your license.</li>
+      <li>Passing a stopped school bus is 5 points, one of the highest.</li>
+    </ul>`},
+  {t:"Three-point turnabout", star:false, html:`
+    <p>Tested on both the written and the road test.</p>
+    <ul>
+      <li>Start at the right edge. Signal left, pull forward turning left, stop near the left curb.</li>
+      <li>Reverse turning right, stop near the right curb.</li>
+      <li>Pull forward turning left to complete the turn.</li>
+    </ul>`}
+];
+
+/* ============ DATA: flashcards ============ */
+const SIGN_CARDS = [...SHAPES.filter(s=>s[0]!=="shapeRectV"&&s[0]!=="shapeRectH"), ...REG_SIGNS, ...WARN_SIGNS, ...GUIDE_SIGNS].map(s=>({
+  deck:"signs", tag:"NAME THIS SIGN", sign:s[0], a:`${s[1].replace(/&amp;/g,"&")} - ${s[2].replace(/&amp;/g,"&")}`
+}));
+const RULE_CARDS = [
+  {deck:"rules",tag:"RULE",q:"At a four-way stop, two cars arrive at the same time. Who goes?",a:"The car on the right goes first."},
+  {deck:"rules",tag:"RULE",q:"When must you use headlights by time of day?",a:"From 30 minutes after sunset to 30 minutes before sunrise."},
+  {deck:"rules",tag:"RULE",q:"Below what visibility distance are headlights required?",a:"Under 500 feet."},
+  {deck:"rules",tag:"RULE",q:"Two-lane road, a school bus stops with red lights. Who must stop?",a:"All traffic in both directions."},
+  {deck:"rules",tag:"RULE",q:"Divided highway with a median, the bus stops on the other side. Must you stop?",a:"No. A median means only traffic behind the bus stops."},
+  {deck:"rules",tag:"RULE",q:"Making a left turn, who do you yield to?",a:"Oncoming, straight-through traffic."},
+  {deck:"rules",tag:"RULE",q:"Entering a roundabout, who has the right of way?",a:"Traffic already in the circle."},
+  {deck:"rules",tag:"RULE",q:"What is the BAC limit for an under-21 driver in NC?",a:"Zero. Any detectable amount means a one-year revocation."},
+  {deck:"rules",tag:"RULE",q:"You start to hydroplane. What do you do?",a:"Ease off the gas; do not brake hard."},
+  {deck:"rules",tag:"RULE",q:"What ices over before the rest of the road?",a:"Bridges and overpasses."},
+  {deck:"rules",tag:"RULE",q:"Emergency vehicle on the shoulder, lights on, two lanes your way. What do you do?",a:"Move over one lane away from it."},
+  {deck:"rules",tag:"RULE",q:"How many points for passing a stopped school bus?",a:"5 points, one of the highest."},
+  {deck:"rules",tag:"RULE",q:"Refusing a breath or blood test costs you what?",a:"An immediate 30-day revocation plus a 12-month DMV revocation."},
+  {deck:"rules",tag:"RULE",q:"A blind pedestrian with a white cane steps off the curb. What is your duty?",a:"Always yield; they get special right of way."},
+  {deck:"rules",tag:"RULE",q:"What does a flashing yellow traffic light mean?",a:"Slow down and proceed with caution."},
+  {deck:"rules",tag:"RULE",q:"What do yellow pavement lines separate?",a:"Traffic moving in opposite directions."},
+  {deck:"rules",tag:"RULE",q:"What do white pavement lines separate?",a:"Traffic moving in the same direction."},
+  {deck:"rules",tag:"RULE",q:"You see black-on-orange signs. What do they mean?",a:"You are entering a work zone; stay alert and slow down."},
+  {deck:"rules",tag:"RULE",q:"You go into a skid. Which way do you steer?",a:"In the direction you want the front of the car to go."},
+  {deck:"rules",tag:"RULE",q:"In fog, which headlights should you use?",a:"Low beams. High beams reflect back and reduce your vision."}
+];
+
+/* ============ DATA: three practice tests ============ */
+const TESTS = [
+  /* ---- TEST A ---- */
+  [
+    {sign:"yield",q:"What does this sign mean?",opts:["Stop completely","Slow down and give the right of way","No entry","Merge left"],c:1,fb:"A downward triangle is always Yield."},
+    {q:"At a four-way stop, two vehicles arrive at the same time. Who has the right of way?",opts:["The faster vehicle","The vehicle on the left","The vehicle on the right","Whoever honks first"],c:2,fb:"A tie goes to the vehicle on the right."},
+    {sign:"railroadCircle",q:"What does this round yellow sign warn of?",opts:["A roundabout","A railroad crossing ahead","A rest area","A detour"],c:1,fb:"A round yellow sign means a railroad crossing is ahead."},
+    {q:"On a two-lane road, a school bus stops ahead with red lights flashing. What must you do?",opts:["Only stop if you are behind the bus","Slow to 20 mph and pass","Stop; all traffic both directions must stop","Stop only if children are visible"],c:2,fb:"On a two-lane road, traffic in both directions stops."},
+    {sign:"slippery",q:"What does this yellow diamond mean?",opts:["Winding road","Slippery when wet","Loose gravel","Sharp curve"],c:1,fb:"The skidding-car symbol means slippery when wet."},
+    {q:"When are headlights required by time of day in NC?",opts:["Only when fully dark","From 30 min after sunset to 30 min before sunrise","Only on highways","Sunset to midnight"],c:1,fb:"30 minutes after sunset until 30 minutes before sunrise."},
+    {sign:"donotenter",q:"What does this sign mean?",opts:["One way","Do not enter; wrong way","No parking","Dead end"],c:1,fb:"The red circle with a white bar means Do Not Enter."},
+    {q:"For a driver under 21, what blood alcohol level triggers a revocation?",opts:["0.08%","0.05%","0.02%","Any detectable amount"],c:3,fb:"NC has zero tolerance under 21."},
+    {sign:"stopAhead",q:"What is this sign telling you?",opts:["A stop sign is ahead; prepare to stop","No stopping","Stop for inspection","Dead end ahead"],c:0,fb:"The stop symbol in a yellow diamond warns a stop sign is ahead."},
+    {q:"An emergency vehicle is stopped on the shoulder with lights flashing and there are two lanes your direction. What does the Move Over law require?",opts:["Stop completely","Move over one lane away from it","Honk and continue","Speed up to clear the area"],c:1,fb:"With multiple lanes, move over one lane away."},
+    {sign:"school",q:"What does this pentagon-shaped sign mean?",opts:["Hospital zone","School zone; watch for children","Park ahead","Pedestrian mall"],c:1,fb:"The five-sided sign marks a school zone."},
+    {q:"You begin to skid. What is the correct response?",opts:["Brake hard immediately","Steer where you want the front to go","Accelerate","Pull the parking brake"],c:1,fb:"Steer in the direction you want the front of the car to go."},
+    {sign:"nopass",q:"What does this sign mean?",opts:["Pass with care","Do not pass","Slow traffic keep right","One way"],c:1,fb:"DO NOT PASS means passing is prohibited in this zone."},
+    {q:"When you see a flashing yellow traffic light, you should:",opts:["Stop completely","Slow down and proceed with caution","Speed up to clear it","Treat it as a red light"],c:1,fb:"A flashing yellow light means slow down and proceed with caution."},
+    {sign:"deer",q:"What does this sign warn of?",opts:["A petting zoo","Deer crossing","A farm exit","Wildlife refuge entrance"],c:1,fb:"Watch for deer, especially at dawn and dusk."},
+    {q:"What do solid yellow pavement lines tell you?",opts:["Lanes go the same direction","Traffic moves in opposite directions","The road ends","A bike lane"],c:1,fb:"Yellow separates opposing directions of traffic."},
+    {sign:"keepright",q:"What does this sign instruct?",opts:["Keep right of the median","Right turn only","No right turn","Merge right"],c:0,fb:"Keep to the right of the median or obstruction."},
+    {q:"You are making a left turn on a solid green light with no arrow. Who do you yield to?",opts:["Pedestrians only","Nobody; green means go","Oncoming traffic","Traffic behind you"],c:2,fb:"On a solid green, a left turn yields to oncoming traffic."},
+    {sign:"merge",q:"What does this sign mean?",opts:["Lane ends","Merging traffic from the right","Divided highway","Y intersection"],c:1,fb:"Traffic merges from the side; adjust your speed."},
+    {q:"What is the maximum speed limit for a school bus in NC?",opts:["35 mph","45 mph","55 mph","25 mph"],c:1,fb:"A school bus max speed is 45 mph."}
+  ],
+  /* ---- TEST B ---- */
+  [
+    {sign:"stop",q:"What must you do at this sign?",opts:["Slow and roll through","Come to a full stop","Yield only if cars are coming","Honk"],c:1,fb:"A full stop is required; then go when clear."},
+    {q:"On a divided highway with a median, a school bus stops on the opposite side. What must you do?",opts:["Stop completely","Keep going; the median separates you","Slow to 10 mph","Pull onto the shoulder"],c:1,fb:"A median means only traffic behind the bus stops."},
+    {sign:"nouturn",q:"What does this sign mean?",opts:["No left turn","No U-turn","No right turn","Roundabout"],c:1,fb:"U-turns are prohibited here."},
+    {q:"Refusing a breath or blood test in NC results in what?",opts:["A warning","Immediate 30-day plus 12-month revocation","A small fine","Nothing if you pass later"],c:1,fb:"Immediate 30-day revocation plus a 12-month DMV revocation."},
+    {sign:"workZone",q:"What does an orange diamond sign indicate?",opts:["A scenic area","A work zone ahead","A school zone","A hospital"],c:1,fb:"Orange always means a work zone."},
+    {q:"What do white pavement lines separate?",opts:["Opposing traffic","Traffic moving the same direction","Parking spaces","Bike lanes only"],c:1,fb:"White separates traffic going the same direction."},
+    {sign:"oneway",q:"What does this sign mean?",opts:["Dead end","One-way traffic","Detour","Do not enter"],c:1,fb:"Traffic flows one direction only."},
+    {q:"In fog, which headlights should you use?",opts:["High beams","Low beams","Parking lights only","Hazards only"],c:1,fb:"Low beams; high beams reflect back and reduce vision."},
+    {sign:"pedCross",q:"What does this yellow-green sign mean?",opts:["School bus stop","Pedestrian crossing","Playground","Hospital"],c:1,fb:"People may be crossing; yield to them."},
+    {q:"You approach a roundabout. Who has the right of way?",opts:["You do","Traffic already in the circle","The larger vehicle","Whoever is fastest"],c:1,fb:"Yield to traffic already in the roundabout."},
+    {sign:"dividedHwy",q:"What does this sign warn of?",opts:["Divided highway begins","Road ends","Narrow bridge","Two-way traffic"],c:0,fb:"The road divides into separated lanes ahead."},
+    {q:"On a steep downgrade, how do you protect your brakes?",opts:["Ride the brakes","Shift to a lower gear","Turn off the engine","Speed up"],c:1,fb:"A lower gear uses engine braking and saves your brakes."},
+    {sign:"hill",q:"What does this sign warn of?",opts:["A bump","A steep downgrade ahead","A speed hump","A ramp"],c:1,fb:"A steep downgrade; check your brakes."},
+    {q:"How many license points come from passing a stopped school bus?",opts:["2","3","5","1"],c:2,fb:"5 points, one of the highest penalties."},
+    {sign:"yieldAhead",q:"What is this sign telling you?",opts:["Yield sign ahead","Merge ahead","Stop ahead","Dead end"],c:0,fb:"A yield sign is ahead."},
+    {q:"A blind pedestrian with a white cane steps into the crosswalk. What must you do?",opts:["Proceed carefully","Always yield to them","Honk a warning","Continue if you have green"],c:1,fb:"They always get the right of way."},
+    {sign:"nobikes",q:"What does this sign mean?",opts:["Bike route","No bicycles allowed","Bike crossing","Bike parking"],c:1,fb:"Bicycles are prohibited on this road."},
+    {q:"What is the first thing that ices over in cold weather?",opts:["Tunnels","Bridges and overpasses","Hills","Parking lots"],c:1,fb:"Bridges and overpasses freeze first."},
+    {sign:"curveRight",q:"What does this sign mean?",opts:["Sharp right turn","Gradual curve to the right","Right lane ends","Detour right"],c:1,fb:"The road curves right; reduce speed."},
+    {q:"What does a solid yellow line on your side of the road mean?",opts:["Pass freely","No passing on your side","Two-way left turn","Bike lane"],c:1,fb:"A solid yellow on your side means no passing."}
+  ],
+  /* ---- TEST C ---- */
+  [
+    {sign:"speed",q:"What does this sign tell you?",opts:["Minimum speed","Maximum legal speed in ideal conditions","Suggested speed only","Speed for trucks only"],c:1,fb:"It is the maximum legal speed in ideal conditions."},
+    {q:"On a four-lane road with no median, a school bus stops. Who must stop?",opts:["Only traffic behind the bus","All traffic both directions","Nobody","Only the lane next to the bus"],c:1,fb:"With no median, all traffic both directions stops."},
+    {sign:"wrongway",q:"You see this sign facing you. What does it mean?",opts:["Detour","You are going the wrong way; turn around","One way ahead","Road work"],c:1,fb:"You are driving against traffic; turn around."},
+    {q:"What should you do when you see black-on-orange signs?",opts:["Speed up to clear the area","Recognize a work zone and stay alert","Ignore them","Stop immediately"],c:1,fb:"Black-on-orange marks a work zone."},
+    {sign:"railroadCircle",q:"What does this sign mean?",opts:["Roundabout","Railroad crossing ahead","Hospital","Rest stop"],c:1,fb:"A round yellow sign warns of a railroad crossing ahead."},
+    {q:"What sobers up someone who has been drinking?",opts:["Coffee","A cold shower","Only time","A big meal"],c:2,fb:"Only time lowers blood alcohol."},
+    {sign:"thruleft",q:"What does this sign allow?",opts:["Left turn only","Go straight or turn left","Right turn only","No turns"],c:1,fb:"This lane may go straight or turn left."},
+    {q:"When following another car, how should you set your distance?",opts:["As close as possible","Enough room to stop safely, more in bad weather","Exactly one car length","It does not matter"],c:1,fb:"Leave enough room to stop; add distance in rain, fog, and ice."},
+    {sign:"farmmach",q:"What does this sign warn of?",opts:["A factory","Slow farm machinery","A construction crane","A toll booth"],c:1,fb:"Slow farm equipment may be on the road."},
+    {q:"For a driver in a commercial vehicle, what BAC counts as impaired?",opts:["0.08%","0.04%","0.10%","0.02%"],c:1,fb:"Commercial drivers are impaired at 0.04%."},
+    {sign:"keepleft",q:"What does this sign instruct?",opts:["Keep left of the median","Left turn only","Merge left","No left turn"],c:0,fb:"Keep to the left of the median or obstruction."},
+    {q:"How long must you wait to retake the knowledge test if you fail?",opts:["The same day","7 calendar days","30 days","One year"],c:1,fb:"You can retake in 7 calendar days."},
+    {sign:"twoway",q:"What does this sign warn of?",opts:["One-way ahead","Two-way traffic ahead","Divided highway begins","Dead end"],c:1,fb:"You are entering a two-way road; watch for oncoming traffic."},
+    {q:"Where must a child under 5 and under 40 lbs sit if the car has a rear seat and a passenger air bag?",opts:["Front seat","Rear seat","Either seat","Driver's lap"],c:1,fb:"They ride in the rear seat."},
+    {sign:"lowclear",q:"What does this sign tell you?",opts:["Speed limit","Overpass height limit ahead","Narrow road","Low shoulder"],c:1,fb:"It marks an overpass height limit ahead."},
+    {q:"What does a broken pavement line mean?",opts:["Never cross it","You may cross or pass when safe","The road ends","Bike lane only"],c:1,fb:"A broken line means you may cross or pass when safe."},
+    {sign:"slowertraffic",q:"What does this sign mean?",opts:["Speed up","Slower traffic keep right","No trucks","Right lane ends"],c:1,fb:"Slow vehicles must use the right lane."},
+    {q:"At a stop sign, after stopping, when may you proceed?",opts:["Immediately","After yielding to traffic and pedestrians","Only on a green light","After 3 seconds no matter what"],c:1,fb:"Yield to traffic and pedestrians, then go when clear."},
+    {sign:"donotstop",q:"What does this sign remind drivers?",opts:["Do not park here","Never stop on the railroad tracks","No standing","Tracks closed"],c:1,fb:"Never stop on railroad tracks for any reason."},
+    {q:"Two cars reach a four-way stop, you are on the left. Who goes first?",opts:["You do","The car on the right","The bigger car","Flip a coin"],c:1,fb:"The vehicle on the right goes first."}
+  ]
+];
+
+/* ============ RENDER HELPERS ============ */
+function gridHTML(data){
+  return data.map(s=>`<div class="sign-card">${signMarkup(s[0],"grid-sign")}<div class="sign-name">${s[1]}</div><div class="sign-mean">${s[2]}</div></div>`).join("");
+}
+document.getElementById("shape-grid").innerHTML = gridHTML(SHAPES);
+document.getElementById("reg-grid").innerHTML = gridHTML(REG_SIGNS);
+document.getElementById("warn-grid").innerHTML = gridHTML(WARN_SIGNS);
+document.getElementById("guide-grid").innerHTML = gridHTML(GUIDE_SIGNS);
+
+/* ---- checklist render (state-aware) ---- */
+function renderTestParts(){
+  document.getElementById("testParts").innerHTML = buildTestParts().map(p=>`
+    <div class="check-card">
+      <h3>${p.icon} ${p.title}</h3>
+      <div class="tagline">${p.tag}</div>
+      <ul class="check-list">${p.items.map(i=>`<li><span class="check-box" role="checkbox"></span><span>${i}</span></li>`).join("")}</ul>
+    </div>`).join("");
+  wireCheckboxes();
+}
+function renderDocCols(){
+  document.getElementById("docCols").innerHTML = buildDocCols().map(c=>`
+    <div class="check-card">
+      <h3>${c.title}</h3>
+      <div class="tagline">Bring ${c.note}</div>
+      <ul class="check-list">${c.items.map(i=>`<li><span class="check-box" role="checkbox"></span><span>${i}</span></li>`).join("")}</ul>
+    </div>`).join("");
+  wireCheckboxes();
+}
+function renderChecklistNote(){
+  const s=CUR||{name:"your state",residency:0,dmv:"#"};
+  const intro=document.getElementById("checklistIntro");
+  if(intro) intro.innerHTML=`As a new ${s.name} resident, or a first-time driver, you take all four parts. Tap a box to check it off as you prep.`;
+  const resTxt = s.residency>0
+    ? `Most states require new residents to get a license within about <strong>${s.residency} days</strong> of moving. `
+    : `New-resident deadlines vary, so check yours soon after moving. `;
+  document.getElementById("docNote").innerHTML =
+    `<strong>Heads up:</strong> applying for a ${s.name} license generally cancels licenses or permits from other states through the State-to-State Verification program, which is expected when you become a resident. ${resTxt}Vision, signs, and knowledge can usually be done the same day. Book or learn more at <a href="${s.dmv}" target="_blank" rel="noopener" style="color:var(--hwy);font-weight:700">your ${s.name} DMV</a>.`;
+}
+function wireCheckboxes(){
+  document.querySelectorAll(".check-box").forEach(b=>{
+    if(b.dataset.wired) return; b.dataset.wired="1";
+    b.addEventListener("click",()=>{b.classList.toggle("on");b.textContent=b.classList.contains("on")?"\u2713":""});
+  });
+}
+wireCheckboxes();
+
+/* ---- rules render ---- */
+document.getElementById("rulesList").innerHTML = RULES.map((r,i)=>`
+  <details class="rule" ${i===0?"open":""}>
+    <summary>${r.t}${r.star?'<span class="pill red">High yield</span>':''}</summary>
+    <div class="body">${r.html}</div>
+  </details>`).join("");
+
+/* ============ TABS ============ */
+document.querySelectorAll("#tabs button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("#tabs button").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.getElementById(b.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"instant"});
+  });
+});
+
+/* ============ FLASHCARDS ============ */
+let deck="all", cards=[], idx=0;
+function buildDeck(){
+  const all=[...SIGN_CARDS,...RULE_CARDS];
+  cards = deck==="all"?all : all.filter(c=>c.deck===deck);
+  idx=0; showCard();
+}
+function showCard(){
+  const c=cards[idx];
+  const fc=document.getElementById("flashcard");
+  fc.classList.remove("flipped");
+  document.getElementById("fcProgress").textContent=`Card ${idx+1} of ${cards.length}`;
+  document.getElementById("fcTag").textContent=c.tag;
+  const qEl=document.getElementById("fcQ");
+  if(c.sign){ qEl.innerHTML=`<div class="fc-signbox">${signMarkup(c.sign,"big-sign")}</div>`; }
+  else { qEl.textContent=c.q; }
+  document.getElementById("fcA").textContent=c.a;
+}
+document.getElementById("flashcard").addEventListener("click",function(){this.classList.toggle("flipped")});
+document.getElementById("flashcard").addEventListener("keydown",function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();this.classList.toggle("flipped")}});
+document.getElementById("fcNext").addEventListener("click",()=>{idx=(idx+1)%cards.length;showCard()});
+document.getElementById("fcPrev").addEventListener("click",()=>{idx=(idx-1+cards.length)%cards.length;showCard()});
+document.getElementById("fcShuffle").addEventListener("click",()=>{for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]]}idx=0;showCard()});
+document.querySelectorAll("#deckpick button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("#deckpick button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); deck=b.dataset.deck; buildDeck();
+  });
+});
+buildDeck();
+
+/* ============ QUIZ ============ */
+let version=0, qSet=[], qi=0, score=0;
+function loadVersion(v){
+  version=v;
+  if(v==="mix"){
+    const pool=[...TESTS[0],...TESTS[1],...TESTS[2]];
+    for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+    qSet=pool.slice(0,20);
+  } else {
+    qSet=[...TESTS[v]];
+  }
+  qi=0; score=0; sessionMisses=[];
+  document.getElementById("quizResult").classList.add("hide");
+  document.getElementById("quizLive").classList.remove("hide");
+  renderQ();
+}
+function renderQ(){
+  const q=qSet[qi];
+  document.getElementById("qCount").textContent=`Question ${qi+1} of ${qSet.length}`;
+  document.getElementById("qScore").textContent=`Score ${score}`;
+  document.getElementById("qText").textContent=q.q;
+  const signWrap=document.getElementById("qSign");
+  if(q.sign){signWrap.classList.remove("hide");signWrap.innerHTML=`<div class="box">${signMarkup(q.sign,"big-sign")}</div>`}
+  else{signWrap.classList.add("hide");signWrap.innerHTML=""}
+  const letters=["A","B","C","D"];
+  document.getElementById("qOpts").innerHTML=q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="ltr">${letters[i]}</span><span>${o}</span></button>`).join("");
+  document.getElementById("qFb").className="quiz-fb";
+  document.getElementById("qFb").textContent="";
+  document.getElementById("qNext").classList.add("hide");
+  document.querySelectorAll("#qOpts .opt").forEach(btn=>btn.addEventListener("click",pick));
+}
+function pick(e){
+  const q=qSet[qi];
+  const chosen=+e.currentTarget.dataset.i;
+  document.querySelectorAll("#qOpts .opt").forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===q.c)btn.classList.add("correct");
+    if(i===chosen&&chosen!==q.c)btn.classList.add("wrong");
+  });
+  const fb=document.getElementById("qFb");
+  if(chosen===q.c){score++;fb.className="quiz-fb good show";fb.textContent="Correct. "+q.fb;}
+  else{
+    fb.className="quiz-fb bad show";fb.textContent="Not quite. "+q.fb;
+    sessionMisses.push(quizTopic(q));
+  }
+  document.getElementById("qScore").textContent=`Score ${score}`;
+  document.getElementById("qBar").style.width=((qi+1)/qSet.length*100)+"%";
+  document.getElementById("qNext").classList.remove("hide");
+}
+document.getElementById("qNext").addEventListener("click",()=>{qi++; qi<qSet.length?renderQ():finishQuiz()});
+function finishQuiz(){
+  document.getElementById("quizLive").classList.add("hide");
+  document.getElementById("quizResult").classList.remove("hide");
+  const pct=Math.round(score/qSet.length*100);
+  const need=passThreshold();
+  const needPct=CUR?CUR.pct:80;
+  const pass=score>=need;
+  document.getElementById("rScore").textContent=`${score}/${qSet.length}`;
+  const v=document.getElementById("rVerdict");
+  v.textContent=pass?`Pass, ${pct}%`:`${pct}%, keep studying`;
+  v.className="verdict "+(pass?"pass":"fail");
+  document.getElementById("rMsg").textContent=pass
+    ? `You are above the ${needPct}% line for ${CUR?CUR.name:"your state"}. Run the other versions to be sure it sticks, then book your appointment.`
+    : `You need ${need} of ${qSet.length} (${needPct}%) to pass in ${CUR?CUR.name:"your state"}. Review the Rules tab and the signs you missed, then try again.`;
+  recordResult(version, score, qSet.length, pass, sessionMisses);
+}
+document.getElementById("rRetry").addEventListener("click",()=>loadVersion(version));
+document.getElementById("rNextV").addEventListener("click",()=>{
+  const order=[0,1,2,"mix"];
+  let cur=order.indexOf(version);
+  const next=order[(cur+1)%order.length];
+  document.querySelectorAll("#versionpick button").forEach(b=>b.classList.toggle("on", b.dataset.v==String(next)));
+  loadVersion(next);
+});
+document.querySelectorAll("#versionpick button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("#versionpick button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    loadVersion(b.dataset.v==="mix"?"mix":+b.dataset.v);
+  });
+});
+
+/* ============ SESSION + PROGRESS TRACKING ============ */
+let sessionMisses=[];
+function quizTopic(q){ return q.sign ? signName(q.sign) : shortRule(q.q); }
+function signName(key){
+  const all=[...SHAPES,...REG_SIGNS,...WARN_SIGNS,...GUIDE_SIGNS];
+  const hit=all.find(s=>s[0]===key);
+  return hit ? hit[1].replace(/&amp;/g,"&") : key;
+}
+function shortRule(text){
+  // condense a rules question into a short topic label
+  const map=[
+    [/school bus/i,"School bus rules"],[/four-way stop|4-way|right of way/i,"Right of way"],
+    [/headlight/i,"Headlights"],[/move over/i,"Move Over law"],[/hydroplan|skid|ice|bridge/i,"Hazard driving"],
+    [/blood alcohol|bac|dwi|drink|alcohol/i,"Alcohol & DWI"],[/seat belt|child|restraint/i,"Seat belts"],
+    [/cell phone|text/i,"Phones & distraction"],[/pavement|yellow line|white line|solid|broken/i,"Pavement markings"],
+    [/point|suspen/i,"Points & suspension"],[/roundabout/i,"Roundabouts"],[/follow|distance/i,"Following distance"],
+    [/work zone|orange/i,"Work zones"],[/knowledge test|how many questions/i,"Test format"],[/left turn|yield to oncoming/i,"Left turns"]
+  ];
+  for(const [re,lbl] of map){ if(re.test(text)) return lbl; }
+  return text.slice(0,38)+"...";
+}
+function pkey(){ return "ncdmv_progress_"+(CUR?CUR.abbr:"NA"); }
+function loadProgress(){
+  try{ return JSON.parse(localStorage.getItem(pkey())) || {history:[],weak:{}}; }
+  catch(e){ return {history:[],weak:{}}; }
+}
+function saveProgress(p){ try{ localStorage.setItem(pkey(),JSON.stringify(p)); }catch(e){} }
+function recordResult(ver,score,total,pass,misses){
+  const p=loadProgress();
+  const vname = ver==="mix" ? "Random Mix" : "Test "+["A","B","C"][ver];
+  p.history.unshift({ver:vname, score, total, pass:!!pass, date:Date.now()});
+  if(p.history.length>30) p.history=p.history.slice(0,30);
+  misses.forEach(m=>{ p.weak[m]=(p.weak[m]||0)+1; });
+  saveProgress(p);
+  renderProgress();
+}
+let progScope="state";
+function allStatesData(){
+  // aggregate every ncdmv_progress_XX key in this browser
+  const agg={history:[],weak:{},byState:{}};
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k && k.indexOf("ncdmv_progress_")===0){
+        const abbr=k.replace("ncdmv_progress_","");
+        let d; try{ d=JSON.parse(localStorage.getItem(k)); }catch(e){ continue; }
+        if(!d) continue;
+        (d.history||[]).forEach(r=>{ agg.history.push(Object.assign({state:abbr},r)); });
+        Object.entries(d.weak||{}).forEach(([t,c])=>{ agg.weak[t]=(agg.weak[t]||0)+c; });
+        if((d.history||[]).length) agg.byState[abbr]=(d.history||[]).length;
+      }
+    }
+  }catch(e){}
+  agg.history.sort((a,b)=>b.date-a.date);
+  return agg;
+}
+let progFilterState="";
+function renderProgress(){
+  const allMode = progScope==="all";
+  let p = allMode ? allStatesData() : loadProgress();
+  // populate + apply filter dropdown in all-states mode
+  const filterWrap=document.getElementById("progFilter");
+  if(allMode){
+    filterWrap.classList.remove("hide");
+    const studied=Object.keys(p.byState||{}).sort((a,b)=>{
+      const na=(STATES[a]&&STATES[a].name)||a, nb=(STATES[b]&&STATES[b].name)||b; return na.localeCompare(nb);
+    });
+    const sel=document.getElementById("progStateFilter");
+    const opts=`<option value="">All states</option>`+studied.map(ab=>`<option value="${ab}">${(STATES[ab]&&STATES[ab].name)||ab}</option>`).join("");
+    if(sel.innerHTML!==opts){ sel.innerHTML=opts; }
+    sel.value=progFilterState;
+    if(progFilterState){
+      p={
+        history:p.history.filter(r=>r.state===progFilterState),
+        weak:{}, byState:{[progFilterState]:p.byState[progFilterState]}
+      };
+      // rebuild weak from filtered state only
+      try{
+        const d=JSON.parse(localStorage.getItem("ncdmv_progress_"+progFilterState))||{weak:{}};
+        p.weak=d.weak||{};
+      }catch(e){}
+    }
+  } else {
+    filterWrap.classList.add("hide");
+  }
+  const h=p.history;
+  const attempts=h.length;
+  const passes=h.filter(r=>r.pass).length;
+  const best=attempts ? Math.max(...h.map(r=>Math.round(r.score/r.total*100))) : 0;
+  // summary stats differ by scope
+  let summary;
+  if(allMode){
+    const statesStudied=Object.keys(p.byState||{}).length;
+    summary=`
+      <div class="stat"><div class="big">${attempts}</div><div class="lbl">Tests taken</div></div>
+      <div class="stat ${best>=80?'pass':''}"><div class="big">${attempts?best+'%':'--'}</div><div class="lbl">Best score</div></div>
+      <div class="stat ${passes?'pass':''}"><div class="big">${passes}</div><div class="lbl">Times passed</div></div>
+      <div class="stat ${statesStudied?'pass':''}"><div class="big">${statesStudied}</div><div class="lbl">States studied</div></div>`;
+  } else {
+    const versionsPassed=new Set(h.filter(r=>r.pass).map(r=>r.ver)).size;
+    summary=`
+      <div class="stat"><div class="big">${attempts}</div><div class="lbl">Tests taken</div></div>
+      <div class="stat ${best>=80?'pass':''}"><div class="big">${attempts?best+'%':'--'}</div><div class="lbl">Best score</div></div>
+      <div class="stat ${passes?'pass':''}"><div class="big">${passes}</div><div class="lbl">Times passed</div></div>
+      <div class="stat ${versionsPassed>=3?'pass':''}"><div class="big">${versionsPassed}/3</div><div class="lbl">Versions cleared</div></div>`;
+  }
+  document.getElementById("progSummary").innerHTML=summary;
+  // history list
+  let hist;
+  if(!attempts){
+    hist=`<div class="hist-empty">No tests yet. Take a practice test and your results show up here.</div>`;
+  } else if(allMode){
+    hist = h.slice(0,12).map(r=>{
+      const pct=Math.round(r.score/r.total*100);
+      const d=new Date(r.date);
+      const ds=d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+      const sName=(STATES[r.state]&&STATES[r.state].name)||r.state;
+      return `<div class="hist-row"><span class="htest">${sName} · ${r.ver}</span><span style="color:var(--muted);font-size:12.5px">${ds}</span><span class="hscore ${r.pass?'p':'f'}">${r.score}/${r.total} · ${pct}%</span></div>`;
+    }).join("");
+  } else {
+    const verNames=["Test A","Test B","Test C","Random Mix"];
+    const verRow=verNames.map(vn=>{
+      const runs=h.filter(r=>r.ver===vn);
+      if(!runs.length) return `<div class="ver-card untaken"><div class="vname">${vn}</div><div class="vbest">--</div><div class="vstatus">Not taken</div></div>`;
+      const vbest=Math.max(...runs.map(r=>r.score));
+      const passed=runs.some(r=>r.pass);
+      return `<div class="ver-card ${passed?'passed':'notyet'}"><div class="vname">${vn}</div><div class="vbest">${vbest}/20</div><div class="vstatus">${passed?'Passed':'Keep trying'}</div></div>`;
+    }).join("");
+    hist = `<div class="ver-row">${verRow}</div>` + h.slice(0,8).map(r=>{
+      const pct=Math.round(r.score/r.total*100);
+      const d=new Date(r.date);
+      const ds=d.toLocaleDateString(undefined,{month:"short",day:"numeric"})+" "+d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+      return `<div class="hist-row"><span class="htest">${r.ver}</span><span style="color:var(--muted);font-size:12.5px">${ds}</span><span class="hscore ${r.pass?'p':'f'}">${r.score}/${r.total} · ${pct}%</span></div>`;
+    }).join("");
+  }
+  document.getElementById("progHistory").innerHTML=hist;
+  // weak topics
+  const weak=Object.entries(p.weak).sort((a,b)=>b[1]-a[1]);
+  if(!weak.length){
+    document.getElementById("progWeak").innerHTML=`<div class="weak-empty">Nothing flagged yet. Miss a question and the topic shows up here so you know what to review.</div>`;
+  } else {
+    document.getElementById("progWeak").innerHTML=weak.slice(0,18).map(([t,c])=>
+      `<span class="weak-chip">${t}<span class="cnt">${c}</span></span>`).join("");
+  }
+}
+document.querySelectorAll("#progScope button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("#progScope button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); progScope=b.dataset.scope; progFilterState=""; renderProgress();
+  });
+});
+document.getElementById("progStateFilter").addEventListener("change",e=>{
+  progFilterState=e.target.value; renderProgress();
+});
+document.getElementById("progReset").addEventListener("click",()=>{
+  if(progScope==="all"){
+    if(confirm("Reset progress for ALL states in this browser? This cannot be undone.")){
+      try{
+        const keys=[];
+        for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.indexOf("ncdmv_progress_")===0) keys.push(k); }
+        keys.forEach(k=>localStorage.removeItem(k));
+      }catch(e){}
+      renderProgress();
+    }
+  } else {
+    if(confirm("Reset saved progress for "+(CUR?CUR.name:"this state")+"? This cannot be undone.")){
+      try{ localStorage.removeItem(pkey()); }catch(e){}
+      renderProgress();
+    }
+  }
+});
+
+/* ============ ROAD TEST CONTENT ============ */
+const RT_SKILLS=[
+  ["Pre-drive check","Before moving, you adjust mirrors and seat, fasten your belt, and know where the controls are. The examiner may ask you to point out the defroster, horn, or hazard lights."],
+  ["Controlled stops","Smooth, complete stops behind the line at stop signs and lights. No rolling stops, no stopping past the crosswalk."],
+  ["Turns &amp; signaling","Signal early, get in the correct lane, yield when required, and complete turns into the matching lane. Check mirrors and blind spots."],
+  ["Lane changes","Signal, check mirrors, look over your shoulder, and change lanes only when it is clear and smooth."],
+  ["Three-point turnabout","Turn the car to face the opposite direction on a narrow road using forward and reverse, without hitting the curb."],
+  ["Backing up","Reverse in a straight line, looking over your right shoulder, keeping the car controlled and on track."],
+  ["Following &amp; speed","Keep a safe following distance, obey the speed limit, and adjust to traffic and conditions."],
+  ["Intersections","Approach at a safe speed, scan left and right, yield correctly, and proceed only when clear."]
+];
+const RT_FAILS=[
+  "Causing an accident or a dangerous situation the examiner has to react to",
+  "Disobeying a stop sign, signal, or traffic law",
+  "Refusing to perform a required maneuver, or doing it unsafely",
+  "Speeding or driving so slowly you impede traffic",
+  "Any moving violation, or the examiner taking control of the wheel or brakes"
+];
+const RT_CAR=[
+  {title:"The vehicle", note:"all must be valid", items:[
+    "Current registration","Valid liability insurance","License plate properly displayed","Recent safety inspection if required"]},
+  {title:"Working equipment", note:"examiner checks these", items:[
+    "Working headlights, brake lights, and turn signals","Working horn and windshield wipers","Two working mirrors","Seat belts for you and the examiner"]}
+];
+document.getElementById("rtSkills").innerHTML=RT_SKILLS.map((s,i)=>`
+  <div class="rt-skill"><div class="num">${i+1}</div><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("");
+document.getElementById("rtFails").innerHTML=RT_FAILS.map(f=>`
+  <div class="rt-fail"><span class="x">!</span><span>${f}</span></div>`).join("");
+document.getElementById("rtCar").innerHTML=RT_CAR.map(c=>`
+  <div class="check-card"><h3>${c.title}</h3><div class="tagline">Bring ${c.note}</div>
+    <ul class="check-list">${c.items.map(i=>`<li><span class="check-box" role="checkbox"></span><span>${i}</span></li>`).join("")}</ul>
+  </div>`).join("");
+function renderRtNote(){
+  const s=CUR||{name:"your state"};
+  document.getElementById("rtNote").innerHTML=`<strong>Bringing a borrowed car?</strong> Most states allow it, including ${s.name}, but the car needs its own valid registration and insurance, and the examiner checks the vehicle's documents, not just yours. Line this up before you book the road test slot.`;
+}
+// wire road test checkboxes through shared wirer
+wireCheckboxes();
+
+/* ---- state-specific rules format note ---- */
+function renderRulesFormatCard(){
+  if(!CUR) return;
+  document.getElementById("rulesFormat").innerHTML=
+    `<strong>${CUR.name} test format:</strong> ${CUR.q} multiple-choice questions, ${CUR.pass} correct (${CUR.pct}%) to pass. These figures are study guidance and can change, so confirm them in the current ${CUR.name} driver handbook. The rules below apply nationwide; a few details (exact penalties, deadlines) can vary by state.`;
+  renderRtNote();
+}
+
+/* ============ LANDING SCREEN + STATE SWITCHER ============ */
+function fillStateSelects(){
+  const opts = stateList().map(s=>`<option value="${s.abbr}">${s.name}</option>`).join("");
+  const sel=document.getElementById("stateSelect");
+  sel.innerHTML=`<option value="">Select a state...</option>`+opts;
+  const sw=document.getElementById("stateSwitch");
+  sw.innerHTML=opts;
+}
+function showApp(abbr){
+  applyState(abbr);
+  document.getElementById("landing").style.display="none";
+  document.getElementById("siteFooter").style.display="block";
+  const y=document.getElementById("sfYear"); if(y) y.textContent=new Date().getFullYear();
+}
+function initState(){
+  fillStateSelects();
+  const sel=document.getElementById("stateSelect");
+  const go=document.getElementById("landGo");
+  sel.addEventListener("change",()=>{ go.disabled=!sel.value; });
+  go.addEventListener("click",()=>{ if(sel.value) showApp(sel.value); });
+  sel.addEventListener("keydown",e=>{ if(e.key==="Enter"&&sel.value) showApp(sel.value); });
+  document.getElementById("stateSwitch").addEventListener("change",e=>{ applyState(e.target.value); });
+  // per-session memory: if a state was chosen this session, skip landing
+  let saved=null;
+  try{ saved=sessionStorage.getItem("ncdmv_state"); }catch(e){}
+  if(saved && STATES[saved]){ showApp(saved); }
+  else { applyState("NC"); /* prime content underneath, landing stays up */ }
+}
+initState();
+renderProgress();
+loadVersion(0);
+</script>
+</body>
+</html>
