@@ -64,14 +64,9 @@ function applyState(abbr){
   try{ sessionStorage.setItem("ncdmv_state",abbr); }catch(e){}
   document.title=`${CUR.name} DMV Prep · Signs & Knowledge Test`;
   const pct=CUR.pct;
-  // shield + eyebrow + sub + badges
+  // shield + compact header line
   document.getElementById("shieldAbbr").textContent=CUR.abbr;
-  document.getElementById("heroEyebrow").textContent=CUR.name+" · Class C License";
-  document.getElementById("heroSub").innerHTML=`Everything on the <span class="state-name-inline">${CUR.name}</span> signs and written knowledge tests. Know what to bring, drill the signs, and take full practice tests built for your DMV.`;
-  document.getElementById("heroBadges").innerHTML=
-    `<span class="badge">${CUR.q} questions · ${pct}% to pass</span>`+
-    `<span class="badge">Every sign &amp; rule</span>`+
-    `<span class="badge">3 practice versions</span>`;
+  document.getElementById("heroEyebrow").textContent=`${CUR.name} · ${CUR.q} Q, ${pct}% to pass`;
   // dropdown current value
   const sw=document.getElementById("stateSwitch"); if(sw) sw.value=abbr;
   // re-render all state-dependent content
