@@ -397,7 +397,6 @@ function initState(){
   let saved=null;
   try{ saved=sessionStorage.getItem("ncdmv_state"); }catch(e){}
   if(saved && STATES[saved]){ showApp(saved); }
-  else { applyState("NC"); /* prime content underneath, landing stays up */ }
 }
 initState();
 renderProgress();
